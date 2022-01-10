@@ -1,0 +1,279 @@
+/* 초기화시작 */
+* {
+   margin: 0;
+   padding: 0;
+   border: 0;
+}
+
+* {
+   font-family: "Regular";
+   font-weight: unset!important;
+}
+
+.wrap {
+   position: relative;
+   font-size: 15px;
+   width: 100%;
+   height: auto;
+   color: #232323;
+}
+.wrap, body {
+   min-width: 320px;
+}
+li{
+	list-style: none;
+	
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+   display: block;
+}
+/*  */
+body {
+   background-color: rgb(248, 248, 248);
+}
+
+.shareit_header div {
+   display: flex;
+   height: 130px;
+   -webkit-box-align: center;
+   align-items: center;
+   width: 1194px;
+   margin-left: auto;
+   margin-right: auto;
+}
+.header-logo1 {  /* 쉐어잇 바로가기 로고 */
+   margin-left: 39px;
+   padding-left: 25px;
+   color: rgb(103, 114, 148);
+   font-size: 17px;
+   font-family: Medium, sans-serif;
+   letter-spacing: -0.43px;
+   background: url(/restaurant/resources/image/join/rightaway.svg) 0px 2px no-repeat;
+}
+a, a:hover {
+   text-decoration: none;
+   color: crimson;
+}
+.header-logo img {
+   width: 90px;
+   
+}
+main {
+   display: block;
+}
+
+.mainlogin {
+   text-align: center;
+}
+
+*, :after, :before {
+   box-sizing: border-box;
+   outline: none;
+   -webkit-tap-highlight-color: transparent;
+}
+
+* {
+   font-family: "Regular";
+   font-weight: unset!important;
+}
+
+.mainlogin {
+   width: 60%;
+   height: 70%;
+   margin: 0px auto;
+   padding: 94px 115px 20px;
+   background-color: rgb(255, 255, 255);
+   border-radius: 10px;
+}
+
+/* main 부분 */
+main {
+   display: block;
+}
+
+.mainlogin {
+   text-align: center;
+}
+
+*, :after, :before {
+   box-sizing: border-box;
+   outline: none;
+   -webkit-tap-highlight-color: transparent;
+}
+
+* {
+   font-family: "Regular";
+   font-weight: unset!important;
+}
+
+/* 회원가입 글꼴 */
+.welcomelogin {
+   margin-bottom: 108px;
+   line-height: 36px;
+   text-align: center;
+}
+.title {
+   font-family: Bold, sans-serif;
+   font-size: 18px;
+   letter-spacing: -0.9px;
+   text-align: center;
+   color: #232323;
+}
+
+.welcomelogin .title {
+   color: rgb(35, 35, 35);
+   font-size: 35px;
+   font-family: Regular, sans-serif;
+   letter-spacing: -1.4px;
+}
+.title {
+   display: block;
+   font-size: 1.17em;
+   margin-block-start: 1em;
+   margin-block-end: 1em;
+   margin-inline-start: 0px;
+   margin-inline-end: 0px;
+}
+.welcomelogin p {
+   color: rgb(94, 94, 94);
+   font-size: 20px;
+   font-family: 'IBM Plex Sans Devanagari', sans-serif;
+   letter-spacing: -1px;
+}
+.welcomelogin p {
+   color: rgb(94, 94, 94);
+   font-size: 20px;
+   font-family: Regular, sans-serif;
+   letter-spacing: -1px;
+}
+p {
+   display: block;
+   margin-block-start: 1em;
+   margin-block-end: 1em;
+   margin-inline-start: 0px;
+   margin-inline-end: 0px;
+}
+/* 회원가입 table */
+.tblForm {
+   width: 100%;
+   border-top: 1px solid #99a0aa;
+   border-bottom: 1px solid #99a0aa;
+   margin-bottom: 10px;
+   border-radius: 3px;
+}
+.tblForm tbody th {
+   padding: 11px 15px 14px 18px;
+   background: #f6f6f6;
+   color: #333333;
+   border: 1px solid #99a0aa;
+   border-radius: 5px;
+   text-align: left;
+   font-size: 14px;
+   font-family: 'NotoKrM';
+}
+.tblForm tbody td:last-child {
+   border-right: 0;
+}
+
+.tblForm.inputForm td {
+   padding: 6px 15px 6px 15px;
+}
+.tblForm tbody td {
+   padding: 6px 15px 6px 18px;
+   border-top: 1px solid #cccccc;
+   border-bottom: 1px solid #cccccc;
+   text-align: left;
+   font-size: 11px;
+}
+.inTxt {
+   display: inline-block;
+   vertical-align: top;
+   width: 98%;
+   height: 32px;
+   padding: 0 9px;
+   line-height: 32px;
+   border: 1px solid #bbbbbb;
+   background: #fff;
+
+   color: #555;
+   font-size: 14px;
+   box-sizing: border-box;
+   appearance: none;
+   border-radius: 3px;
+}
+/* 생년월일 박스 */
+
+.selectboxWrap .select.selectBg {
+   background: #fff url(/nrsc/images/common/btn_selectbox.png) 100% center no-repeat;
+   background-size: 27px 30px;
+}
+.selectboxWrap .select {
+   width: 65px;
+   padding: 3px 0 4px 8px;
+   height: 32px;
+   border: 1px solid #bbbbbb;
+   font-size: 14px;
+   color: #555;
+   box-sizing: border-box;
+   appearance: none;
+   background: #fff url(/nrsc/images/common/btn_selectbox.png) 100% center no-repeat;
+   background-size: 27px 30px;
+}
+select {
+   appearance: none;
+   border-radius: 0px;
+}
+.tbtns {
+   display: inline-block;
+   font-size: 14px;
+   text-align: center;
+   padding: 0 8px;
+   height: 32px;
+   line-height: 29px;
+   color: #515e71;
+   background: #e3e7ed;
+   border: 1px solid #bcc1ca;
+   box-sizing: border-box;
+   font-family: 'NotoKrM';
+}
+/* 0분 0초 */
+.tblForm td .key {
+   display: inline-block;
+   margin-left: 5px;
+   color: #e6000c;
+   font-family: 'NotoKrM';
+}
+
+/* 가입하기 버튼 */
+.LoginEnter { 
+   display:block; 
+   width: 100%;
+   height: 64px;
+   line-height:40px; 
+   margin-bottom: 10px;
+   color: crimson;
+   font-size: 20px;
+   font-family: Medium, sans-serif;
+   background-color: rgb(255, 255, 255);                     
+   text-align:center;
+   border: solid 1px crimson;
+   border-radius: 5px;
+   cursor: pointer; 
+   transition:all 0.9s, color 0.3; 
+} 
+
+.LoginEnter:hover{
+   background-color: crimson;
+   color: rgb(255, 255, 255);
+}
+
+.LoginEnter {  
+      color: crimson;
+}
+
+#authCode_btn{
+	
+	
+}
+

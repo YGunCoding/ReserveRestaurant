@@ -1,0 +1,201 @@
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+
+#contentBtn, .contentBtn{
+			width: 70px;
+		    background-color: rgb(230, 225, 225);
+		    border: none;
+		    color: gray;
+		    padding: 5px;
+		    margin: 5px;
+		    border-radius: 10px;
+		}
+		
+		.containerForm{
+			margin:30px 0;
+		}
+		.commentBorder{
+			border-bottom: 1px solid rgb(230, 225, 225);
+			border-top: 1px solid  rgb(230, 225, 225);
+			margin:10px 0;
+			padding: 10px;
+		}
+		.updateDeleteLink, .updateDeleteLink2{
+			display:flex;
+		}
+		.updatelink, .deletelink{
+			color:gray;
+			margin:0 10px;
+		}
+		.commentContent{
+			padding: 5px 0 ;
+		}
+		.updateDeleteLink2{
+			margin-left: 100px;
+		}
+		.commentTextarea{
+			padding: 5px;
+			width: 700px;
+			border: 1px solid  rgb(230, 225, 225);
+		}
+		.commentTitle{
+			line-height:70px;
+		}
+		
+		
+body{
+	font-family: nanumsquare;
+}
+ a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    cursor: pointer;
+    color:black;
+}
+/*question 테이블 작업*/
+table{
+    width: 100%;
+}
+.question_btn{
+    display: flex;
+}
+.store_question, .reserve_question{
+    width: 300px;
+    margin:0 auto;
+    padding: 5px ;
+    text-align: center;
+}
+
+
+thead{
+    text-align: center;
+}
+
+.question_table td{
+    border-bottom: 1px solid gray;
+}
+/* table td:first-child{
+    width: 250px;
+} */
+
+
+.addtable td:first-child{
+	width:250px
+}
+
+select{
+    padding:4px;
+}
+
+.address_box{
+	margin:3px;
+}
+.address_box input{
+	width: 308px;
+}
+.address{
+	margin-right:30px;
+}
+
+.infobox td:first-child{
+	width:200px;
+} 
+.infobox input{
+	width:250px;
+}
+#check_id, #check_pw{
+	width:100px;
+    background-color: #da5e531605738;
+    border: none;
+    color: gray;
+    padding: 5px;
+    border-radius: 10px;
+}
+#check_id:hover, #check_pw:hover{
+    cursor: pointer;
+}
+.empty_content{
+	padding: 5px;
+}
+.list_table{
+	border:1px solid gray;
+	margin: 10px;
+	border-radius:30px;
+}
+
+.list_table:hover{
+	cursor:pointer;
+}
+.list_table td:first-child{
+	width:300px;
+}
+.paging{
+	width: 100%;
+	color: rgb(160, 57, 38);
+	text-align: center;
+    margin: 30px;
+}
+.listimg{
+	width:300px;
+	height: 250px;
+	border-radius: 10px;
+}
+.listtitle{
+	text-align:center;
+	padding-top: 15px;
+}
+.qnatable{
+	width:100%	
+}
+.question_table td{
+	text-align:center;
+}
+/* .question_table td:first-child{
+	width:20%;
+} */
+.qnatable td:first-child.{
+	width:100px;
+}
+.qnatable input, .qnatable textarea{
+	border: none;
+	outline: none;
+}
+.qnatable td{
+	border-bottom:0.5px solid silver;
+}
+.comment{
+	display: flex;
+	margin: 10px;
+	flex-flow:row nowrap;
+	justify-content:space-between;
+	text-align:center;
+}
+.commenttitle{
+	font-size:14px;
+	width:100px;
+	height:30px;
+	margin: 20px 0 0 0;
+	padding:10px;
+}
+.content_btn{
+	width:30px;
+	background-color: silver;
+	padding:10px
+}
+.bottombtn{
+	display:flex;
+	text-align:center;
+}
+.titletable{
+	width:45%;
+}
+		
+.store_question:hover, .reserve_question:hover{
+    background-color: rgba(160, 57, 38, 0.795);
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+}

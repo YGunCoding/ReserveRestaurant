@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.reserve.restaurant.repository.ReviewRepository">
+	
+
+<!-- 리뷰 리스트 ( detail에보여주기 위한 ) -->
+   <select id="reviewList"  resultType="Map">
+      SELECT rv.review_writer, rv.review_content, rv.review_origin, rv.review_saved, rv.review_path, rv.review_date, rv.review_rate, r.res_name 
+      FROM review rv, restaurant r
+         WHERE rv.res_no = r.res_no
+           AND rv.res_no = #{resNo}
+   </select>
+   
+   <!-- 사업자페이지에 보일 리뷰 리스트 -->
+    <select id="ownerReviewList" parameterType="Map" resultType="Map">
+      SELECT rv.review_no, rv.review_writer, rv.review_content, rv.review_origin, rv.review_saved, rv.review_path, rv.review_date, rv.review_rate, r.res_name 
+       FROM review rv, restaurant r, owner o
+      WHERE rv.res_no = r.res_no
+        AND r.owner_no = o.owner_no
+        AND o.owner_no = #{ownerNo}
+        
+   </select>
+	
+	<!-- 리뷰 선택 -->
+	<select id="selectReviewList" parameterType="Long" resultType="Review">
+		SELECT *
+		  FROM review
+		 WHERE review_no =#{reviewNo}
+	</select>
+	
+	
+	
+	<!-- 총 리뷰리스트 -->
+ 	<select id="moreReview" parameterType="Map" resultType="Review">
+ 		SELECT B.*
+ 		  FROM (SELECT ROWNUM AS rn, A.*
+ 		    	  FROM(SELECT rv.*
+ 		    	  		 FROM review rv, restaurant r
+ 		    	  		WHERE rv.res_no = r.res_no
+ 		    	  		ORDER BY rv.review_date)A)B
+ 		 WHERE B.rn BETWEEN #{beginRecord} AND #{endRecord} 
+ 	</select>
+
+	<!-- 사용자가 리뷰 삽입 -->
+	<insert id="insertReview" parameterType="Review" >
+		INSERT INTO REVIEW (review_no, review_writer, review_content, review_origin, review_saved, review_path, review_date, review_rate, user_no, res_no)
+		VALUES (REVIEW_NO_SEQ.NEXTVAL, #{reviewWriter}, #{reviewContent}, #{reviewOrigin}, #{reviewSaved}, #{reviewPath}, SYSDATE, #{reviewRate}, #{userNo}, #{resNo})
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	<!-- 별점 평균 -->
+<!-- 	<select id="avgReviewRate" parameterType="Long" resultType="int">
+		select round(avg(rv.review_rate)), rv.user_no
+		  from review rv, restaurant r
+		 where rv.res_no = r.res_no
+		   and rv.res_no = #{resNo}
+		 group by user_no
+	</select> -->
+	
+	<!-- 총 리뷰 수-->
+<!-- 	<select id="totalReview" parameterType="Long" resultType="int">
+		select count(rv.review_no)
+	  	  from review rv, restaurant r
+		 where rv.res_no = r.res_no
+		   and rv.res_no = #{resNo}
+	</select> -->
+	
+	<!-- 
+	<delete id="deleteReview" parameterType="Long">
+		DELETE
+		  FROM REVIEW
+		 WHERE REVIW_NO = #{reviewNo}
+	</delete> -->
+	
+	<!-- 사장님 댓글 -->
+
+	<!--전체 댓글수 -->
+	<select id="commentCount" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM COMMENTS
+    </select>
+
+
+	<!-- 댓글 조회 -->	
+	<select id="commentList"  parameterType="Long" resultType="Comment">
+		SELECT *
+		 FROM comments
+		WHERE review_no = #{reviewNo}
+		 
+	</select> 
+		
+	<!-- 댓글 추가 -->
+	<insert id="addComment" parameterType="Comment">
+		INSERT INTO COMMENTS
+		VALUES (comment_no_seq.nextval, #{reviewNo}, #{content}, #{writer}, SYSDATE)
+	</insert>
+ 	
+	<!-- 댓글 삭제 -->
+	<delete id="removeComment" parameterType="Long">
+	   DELETE 
+		 FROM COMMENTS
+		WHERE comment_no =  #{commentNo}
+	</delete>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateComment" parameterType="Comment">
+        UPDATE COMMENTS
+            SET
+            content = #{content}
+       	WHERE comment_no =  #{commentNo}
+    </update>
+    
+    
+    
+    
+    
+    
+<!-- 리뷰 리스트 ( detail에보여주기 위한 ) -->
+   <select id="reviewList1"  resultType="Review" parameterType="Long">
+      SELECT rv.review_writer, rv.review_content, rv.review_origin, rv.review_saved, rv.review_path, rv.review_date, rv.review_rate, r.res_name 
+      FROM review rv, restaurant r
+         WHERE rv.res_no = r.res_no
+           AND rv.res_no = #{resNo}
+   </select>
+   
+
+	 
+</mapper>

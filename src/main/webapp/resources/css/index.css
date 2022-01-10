@@ -1,0 +1,542 @@
+/* 초기화시작 */
+
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+* {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    vertical-align: top;
+}
+
+body {
+    font-family: 'nanumsquare';
+}
+
+.wrap {
+    width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.wrap:after,
+ul:after,
+.cl:after,
+a:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+
+.blind {
+    position: absolute;
+    left: -9999px;
+    width: 0;
+    height: 0;
+    font-size: 0;
+    overflow: hidden;
+}
+
+
+/* 초기화끝 */
+
+
+/* 헤더시작 */
+
+header {
+    height: 120px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: white;
+    border-bottom: 1px solid silver;
+    box-shadow: 0 1px 2px lightgray;
+    margin: 0 auto;
+}
+
+header h1 {
+    padding: 25px 0;
+}
+
+header #gnb {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    font-size: 18px;
+}
+
+header #gnb li {
+    float: left;
+    margin-right: 20px;
+}
+
+header #gnb li:last-child {
+    margin-right: 0;
+}
+
+
+/* 헤더끝 */
+
+
+/* 메뉴시작 */
+
+.accordion {
+    float: left;
+    margin-left: 150px;
+}
+
+.cate {
+    width: 150px;
+    position: relative;
+    border-style: solid;
+    border-width: 1px 1px 0 1px;
+    border-color: rgb(194, 188, 188);
+    border-radius: 3px
+}
+
+.cate:last-child {
+    border-bottom: 1px solid rgb(230, 224, 224);
+}
+
+.cate .menu {
+    display: block;
+    position: relative;
+    width: 100%;
+    background: rgb(219, 215, 215);
+    height: 80px;
+}
+
+.cate .menu .menulink {
+    display: block;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    width: 70%;
+    padding-left: 15px;
+    line-height: 80px;
+}
+
+.cate .menu .subopen {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    right: 15px;
+    padding: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    transform: rotate(45deg);
+}
+
+.cate ul li {
+    padding: 5px 10px;
+    font-weight: 500;
+    font-size: 15px;
+    text-align: center;
+}
+
+.cate ul li:first-child {
+    padding-top: 20px;
+}
+
+.cate ul li:last-child {
+    padding-bottom: 20px;
+}
+
+.cate ul li a {
+    font-size: 15px;
+}
+
+
+/* 메뉴끝 */
+
+.location_wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.location_img a img {
+    display: inline-block;
+    width: 130px;
+    height: 100px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.location_ul {
+    width: 150px;
+}
+
+.location_ul h3 {
+    display: block;
+    width: 130px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.main {
+    margin-top: 200px;
+}
+
+.main .wrap a {
+    width: 46px;
+    height: 68px;
+    background: rgba(0, 0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+}
+
+.main .wrap .prev {
+    left: 520px;
+}
+
+.main .wrap .next {
+    right: 518px;
+}
+
+.main .wrap .page {
+    width: 66px;
+    height: 68px;
+    background: rgba(0, 0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    left: 568px;
+}
+
+.slide-text {
+    width: 600px;
+    height: 300px;
+    background: rgba(0, 0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    left: 508px;
+    top: 50px;
+    font-size: 30px;
+    color: white;
+}
+
+.main .wrap .page li:first-child {
+    font-family: 'S-CoreDream-3Light';
+    color: #ccc;
+}
+
+.main .wrap .page li:last-child {
+    color: #666666
+}
+
+
+/* swiper시작 */
+
+#frame {
+    width: 1200px;
+    height: 600px;
+    overflow: hidden;
+    position: relative;
+}
+
+#frame .slide {
+    width: 3600px;
+    height: 600px;
+    position: relative;
+}
+
+#frame .slide li {
+    float: left;
+    width: 1200px;
+    height: 600px;
+}
+
+#frame .slide li:nth-child(1) {
+    background: url(/restaurant/resources/image/index/main.jpg) no-repeat center/cover;
+}
+
+#frame .slide li:nth-child(2) {
+    background: url(/restaurant/resources/image/index/main1.jpg) no-repeat center/cover;
+}
+
+#frame .slide li:nth-child(3) {
+    background: url(/restaurant/resources/image/index/main2.jpg) no-repeat center/cover;
+}
+
+#frame .slide li {
+    text-align: center;
+}
+
+#frame .slide .text {
+    color: #eee;
+    padding: 0 0 44px 30px;
+    box-sizing: border-box;
+    margin: 220px 60px 0 0;
+}
+
+#frame .slide .text h3 {
+    font-size: 30px;
+    line-height: 1.6;
+}
+
+#frame .slide .text span {
+    display: block;
+    font-size: 28px;
+}
+
+#frame .slide .text p {
+    padding: 36px 0 20px;
+    line-height: 1.6;
+    font-size: 20px;
+}
+
+.h3_text {
+    display: block;
+    margin: 60px 0 30px;
+    font-size: 27px;
+}
+
+#new ul li {
+    float: left;
+    margin-right: 25px;
+    cursor: pointer;
+}
+
+#new ul li:last-child {
+    margin-right: 0;
+}
+
+#new ul li h3 {
+    padding-top: 10px;
+}
+
+#new ul li p {
+    padding-top: 10px;
+}
+
+
+/* swiper끝 */
+
+
+/* review 시작 */
+
+.review_ul {
+    width: 200px;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.review_ul li a img {
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
+}
+
+.text_box {
+    border: 1px solid silver;
+    border-radius: 5px;
+    width: 100%;
+    background-color: rgba(226, 224, 224, 0.3);
+    opacity: 1;
+    transition: transform 2s, opacity 2s;
+}
+
+.text_box>h3 {
+    margin: 5px 0;
+}
+
+
+/* video_section 시작 */
+
+#video_section {
+    margin: 70px 0;
+}
+
+#video_section .wrap {
+    display: flex;
+}
+
+.video_text {
+    width: 600px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 30px;
+    border: 1px solid rgb(241, 240, 240);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+}
+
+
+/* video_section 끝 */
+
+
+/* footer시작 */
+
+.footer {
+    padding: 80px 0 32px;
+}
+
+.footer_link {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    font-weight: 400;
+}
+
+.footer_item {
+    margin: 0 10px;
+}
+
+.footer_copy {
+    width: 553px;
+    margin: 10px auto 0;
+    text-align: center;
+}
+
+.footer_logo {
+    display: inline-block;
+    /* 보여줄 이미지 크기 */
+    width: 70px;
+    height: 15px;
+    background-image: url(../images/projectlogo.png);
+    background-size: 245px 95px;
+    /* 본 이미지 크기 */
+    background-position: 0 -51px;
+}
+
+.footer_copy>.text {
+    color: #888;
+    font-weight: 800;
+}
+
+.footer_copy img {
+    margin-bottom: 10px;
+}
+
+
+/* 끝 */
+
+.box-wrap {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.box {
+    position: relative;
+    width: 300px;
+    height: 250px;
+    border: 1px solid #c7c8d1;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    margin: 5px;
+}
+
+.box img {
+    width: 300px;
+    height: 250px;
+    background-size: cover;
+    cursor: pointer;
+}
+
+.box .info {
+    color: #fff;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 0.35s ease-in-out;
+}
+
+.box:hover .info {
+    opacity: 1;
+}
+
+.box .info h3 {
+    font-size: 19px;
+    padding-bottom: 0.4em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+.box .info p {
+    font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+/* radio 설정*/
+/*     .divbox{
+      width: 100%;
+      text-align: center;
+   }
+	.switch-field {
+   display: flex;
+   margin: 0 0 0 200px;
+	margin-bottom: 36px;
+	overflow: hidden;
+	}
+.switch-field input {
+	position: absolute !important;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	width: 1px;
+	border: 0;
+	overflow: hidden;
+}
+.switch-field label {
+	background-color: #e4e4e4;
+	color: rgba(0, 0, 0, 0.6);
+	font-size: 14px;
+	line-height: 1;
+	text-align: center;
+	padding: 8px 16px;
+	margin-right: -1px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+	transition: all 0.1s ease-in-out;
+}
+.switch-field label:hover {
+	cursor: pointer;
+}
+.switch-field input:checked + label {
+	background-color:rgb(160, 57, 38);
+	color:white;
+	box-shadow: none;
+}
+.switch-field label:first-of-type {
+	border-radius: 4px 0 0 4px;
+}
+.switch-field label:last-of-type{
+	border-radius: 0 4px 4px 0;
+}
+h2 {
+	font-size: 18px;
+	 */margin-bottom: 8px;
+}

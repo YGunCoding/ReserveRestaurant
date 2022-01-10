@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.reserve.restaurant.repository.NoticeRepository">
+	
+	
+	
+	
+	<select id="selectNoticeList" resultType="Notice">
+		SELECT NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_HIT, NOTICE_DATE, NOTICE_LASTMODIFIED
+		  FROM NOTICE
+	</select>
+	
+	<insert id="insertNotice" parameterType="Notice">
+		INSERT INTO NOTICE
+		VALUES (NOTICE_NO_SEQ.NEXTVAL, #{noticeWriter}, #{noticeTitle}, #{noticeContent}, 0, SYSDATE, SYSDATE)
+	</insert>
+	
+	<select id="selectNoticeView" parameterType="Long" resultType="Notice">
+		SELECT NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_HIT, NOTICE_DATE, NOTICE_LASTMODIFIED
+		  FROM NOTICE
+		 WHERE NOTICE_NO = #{noticeNo}
+	</select>
+	
+	
+	<update id="updateNotice" parameterType="Notice">
+		UPDATE NOTICE
+		   SET NOTICE_TITLE = #{noticeTitle}, NOTICE_CONTENT = #{noticeContent}, NOTICE_LASTMODIFIED = SYSDATE , NOTICE_HIT = NOTICE_HIT
+		 WHERE NOTICE_NO = #{noticeNo}
+	</update>
+	
+	<update id="updateNoticeHit" parameterType="Long">
+		UPDATE NOTICE
+		   SET NOTICE_HIT = NOTICE_HIT + 1
+		 WHERE NOTICE_NO = #{noticeNo}
+	</update>
+	
+	<delete id="deleteNotice" parameterType="Long">
+		DELETE
+		  FROM NOTICE
+		 WHERE NOTICE_NO = #{noticeNo}
+	</delete>
+</mapper>

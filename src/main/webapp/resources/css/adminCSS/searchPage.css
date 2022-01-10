@@ -1,0 +1,315 @@
+ /* 초기화시작 */
+
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+* {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    vertical-align: top;
+}
+
+body {
+    font-family: 'nanumsquare';
+}
+
+.wrap {
+    width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+
+ /* 헤더시작 */
+ 
+ header {
+     height: 120px;
+     padding-top: 20px;
+     padding-bottom: 20px;
+     position: fixed;
+     top: 0;
+     width: 100%;
+     z-index: 100;
+     background-color: white;
+     border-bottom: 1px solid silver;
+     box-shadow: 0 1px 2px lightgray;
+     margin: 0 auto;
+ }
+ 
+ header h1 {
+     padding: 25px 0;
+ }
+ 
+ header #gnb {
+     position: absolute;
+     right: 0;
+     top: 50px;
+     font-size: 18px;
+     font-weight: bold;
+ }
+ 
+ header #gnb li {
+     float: left;
+     margin-right: 20px;
+ }
+ 
+ header #gnb li:last-child {
+     margin-right: 0;
+ }
+ /* 헤더끝 */
+ /* 메뉴시작 */
+ 
+ .accordion {
+     float: left;
+     margin-left: 150px;
+     margin-top: 200px;
+ }
+ 
+ .cate {
+     width: 150px;
+     position: relative;
+     border-style: solid;
+     border-width: 1px 1px 0 1px;
+     border-color: rgb(194, 188, 188);
+     border-radius: 3px
+ }
+ 
+ .cate:last-child {
+     border-bottom: 1px solid rgb(230, 224, 224);
+ }
+ 
+ .cate .menu {
+     display: block;
+     position: relative;
+     width: 100%;
+     background: rgb(219, 215, 215);
+     height: 80px;
+ }
+ 
+ .cate .menu .menulink {
+     display: block;
+     color: rgb(255, 255, 255);
+     text-decoration: none;
+     width: 70%;
+     padding-left: 15px;
+     line-height: 80px;
+     font-weight: 800;
+ }
+ 
+ .cate .menu .subopen {
+     position: absolute;
+     width: 8px;
+     height: 8px;
+     right: 15px;
+     padding: 0;
+     top: 0;
+     bottom: 0;
+     margin: auto;
+     border-right: 1px solid #fff;
+     border-bottom: 1px solid #fff;
+     transform: rotate(45deg);
+ }
+ 
+ .cate ul li {
+     padding: 5px 10px;
+     font-weight: 500;
+     font-size: 15px;
+     text-align: center;
+ }
+ 
+ .cate ul li:first-child {
+     padding-top: 20px;
+ }
+ 
+ .cate ul li:last-child {
+     padding-bottom: 20px;
+ }
+ 
+ .cate ul li a {
+     font-size: 15px;
+ }
+ /* 메뉴끝 */
+ 
+ .footer {
+     padding: 80px 0 32px;
+ }
+ 
+ .footer_link {
+     padding: 0;
+     display: flex;
+     justify-content: center;
+     font-weight: 400;
+ }
+ 
+ .footer_item {
+     margin: 0 10px;
+ }
+ 
+ .footer_copy {
+     width: 553px;
+     margin: 10px auto 0;
+     text-align: center;
+ }
+ 
+ .footer_copy>.text {
+     color: #888;
+     font-weight: 800;
+ }
+ 
+ .footer_copy img {
+     margin-bottom: 10px;
+ }
+ 
+ .footer_copy>div {
+     width: 100%;
+ }
+ 
+ .footer_logo {
+     text-align: center;
+ }
+ 
+ #search_form {
+ 	 display: lnline-block;
+     text-align: center;
+     height: 50px;
+     width: 1000px;
+     border: 2px solid crimson;
+     border-radius: 20px;
+     margin: 200px auto 0;
+ }
+ 
+ .search_area {
+     width: 800px;
+     height: 100%;
+     border: none;
+     padding-left: 10px;
+     font-size: 15px;
+ }
+ 
+ .search_area:focus {
+     outline: none;
+ }
+ 
+ .search_btn {
+     border: none;
+     background-color: white;
+     width: 100px;
+     height: 30px;
+     font-size: 15px;
+     border-radius: 20px;
+ }
+ 
+ .search_btn:hover {
+     background-color: red;
+     color: white;
+     transition: all 0.5s;
+ }
+ 
+ .fa-search {
+     color: gray;
+ }
+ 
+ .list_section {
+     width: 1000px;
+     margin: 100px auto;
+ }
+ 
+ .rest_info {
+     display: flex;
+     margin: 0 auto;
+     padding: 50px;
+     border-top: 1px solid lightgray;
+ }
+ 
+ .rest_info:last-of-type {
+     border-bottom: 1px solid lightgray;
+ }
+ 
+ .rest_img {
+     width: 200px;
+     height: 150px;
+     padding-right: 30px;
+ }
+ 
+ .rest_name {
+     display: inline-block;
+     font-size: 35px;
+     margin-top: 15px;
+     margin-bottom: 10px;
+ }
+ 
+ .rest_time {
+     display: inline-block;
+     padding-left: 10px;
+     font-size: 15px;
+     color: gray;
+ }
+ 
+ .rest_address {
+     display: inline-block;
+     font-size: 20px;
+     margin-bottom: 5px;
+ }
+ 
+ .rest_tel {
+     margin-bottom: 10px;
+ }
+ 
+ .copy_address {
+     display: inline-block;
+     margin-left: 7px;
+     border: none;
+     background-color: white;
+     font-size: 13px;
+ }
+ 
+  .rest_address {
+  	width: 1000px;
+    border: none;
+ }
+ 
+ .rest_address:focus {
+     outline: none;
+ }
+ 
+/*
+ #address {
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 1px;
+     height: 1px;
+     margin: 0;
+     padding: 0;
+     border: 0;
+ }
+ */
+ 
+ .search_comment {
+     width: 1000px;
+     height: 1000px;
+     margin: 0 auto;
+     margin-top: 100px;
+     text-align: center;
+ }
+	
+ .comment {
+    font-size: 30px;
+    line-height: 100px;
+ }
+
+.paging_area {
+    width: 100%;
+	color: rgb(160, 57, 38);
+	text-align: center;
+    margin: 30px;
+}

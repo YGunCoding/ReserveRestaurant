@@ -1,0 +1,292 @@
+/* 초기화시작 */
+        
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+* {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    vertical-align: top;
+    margin-bottom: 100px;
+}
+
+body {
+    font-family: 'nanumsquare';
+}
+
+.wrap {
+    width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.wrap:after,
+ul:after,
+.cl:after,
+a:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+
+.blind {
+    position: absolute;
+    left: -9999px;
+    width: 0;
+    height: 0;
+    font-size: 0;
+    overflow: hidden;
+}
+/* 초기화끝 */
+/* 헤더시작 */
+header {
+   height: 120px;
+   padding-top: 20px;
+   padding-bottom: 20px;
+   position: fixed;
+   top: 0;
+   width: 100%;
+   z-index: 100;
+   background-color: white;
+   border-bottom: 1px solid silver;
+   box-shadow: 0 1px 2px lightgray;
+   margin: 0 auto;
+}
+
+header #gnb {
+   position: absolute;
+   right: 0;
+   top: 50px;
+   font-size: 18px;
+   font-weight: bold;
+}
+
+header #gnb li {
+   float: left;
+   margin-right: 20px;
+}
+
+header #gnb li:last-child {
+   margin-right: 0;
+}
+/* 헤더끝 */
+/* 메뉴시작 */
+
+.accordion {
+    float: left;
+    margin-left: 150px;
+    margin-top: 200px;
+}
+
+.cate {
+    width: 150px;
+    position: relative;
+    border-style: solid;
+    border-width: 1px 1px 0 1px;
+    border-color: rgb(194, 188, 188);
+    border-radius: 3px
+}
+
+.cate:last-child {
+    border-bottom: 1px solid rgb(230, 224, 224);
+}
+
+.cate .menu {
+    display: block;
+    position: relative;
+    width: 100%;
+    background: rgb(219, 215, 215);
+    height: 80px;
+}
+
+.cate .menu .menulink {
+    display: block;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    width: 70%;
+    padding-left: 15px;
+    line-height: 80px;
+    font-weight: 800;
+}
+
+.cate .menu .subopen {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    right: 15px;
+    padding: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    transform: rotate(45deg);
+}
+
+.cate ul li {
+    padding: 5px 10px;
+    font-weight: 500;
+    font-size: 15px;
+    text-align: center;
+}
+
+.cate ul li:first-child {
+    padding-top: 20px;
+}
+
+.cate ul li:last-child {
+    padding-bottom: 20px;
+}
+
+.cate ul li a {
+    font-size: 15px;
+}
+/* 메뉴끝 */
+
+/* QnA 제목 */
+
+.review_detail>p:nth-of-type(1) {
+   font-size: 20px;
+   margin-bottom: 15px;
+}
+.review_detail>p:nth-of-type(1)>span:nth-of-type(1), .review_detail>p:nth-of-type(1)>span:nth-of-type(2) {
+   font-size: 55px;
+}
+.review_detail {
+   margin-top: 200px;
+   text-align: center;
+}
+.review_detail>p:nth-of-type(3) {
+   font-size: 35px;
+   color: rgb(160, 57, 38);
+   margin-bottom: 100px;
+}
+
+
+.review_aver_section, .review_section {
+   width: 1200px;
+   margin: 0 auto;
+   padding-top: 40px;
+   padding-bottom: 30px;
+   position: relative;
+}
+
+
+a:link, a:visited {
+	text-decoration: none; 
+	color: #656565;
+} 
+.board_list {
+	width:1200px;
+	border-top:2px solid #252525;
+	border-bottom:1px solid #ccc
+} 
+.board_list thead th:first-child{
+	background-image:none
+} 
+.board_list thead th {
+	border-bottom:1px solid #ccc;
+	padding:12px 0 13px 0;
+	color:#3b3a3a;
+	vertical-align:middle
+} 
+.board_list tbody td {
+	border-top:1px solid #ccc;
+	padding:10px 0;
+	text-align:center;
+	vertical-align:middle
+} 
+.board_list tbody tr:first-child td {
+	border:none
+} 
+.board_list tbody td.title {
+	text-align:left; 
+	padding-left:20px
+} 
+.board_list tbody td a {
+	display:inline-block
+} 
+.board_view {
+	width:100%;
+	border-top:2px solid #252525;
+	border-bottom:1px solid #ccc
+} 
+.board_view tbody th {
+	text-align:left;
+	background:#f7f7f7;
+	color:#3b3a3a
+} 
+.board_view tbody th.list_tit {
+	font-size:13px;
+	color:#000;
+	letter-spacing:0.1px
+} 
+.board_view tbody .no_line_b th, .board_view tbody .no_line_b td {
+	border-bottom:none
+} 
+.board_view tbody th, .board_view tbody td {
+	padding:15px 0 16px 16px;
+	border-bottom:1px solid #ccc
+} 
+.board_view tbody td.view_text {
+	border-top:1px solid #ccc; 
+	border-bottom:1px solid #ccc;
+	padding:45px 18px 45px 18px
+} 
+.board_view tbody th.th_file {
+	padding:0 0 0 15px; 
+	vertical-align:middle
+} 
+.wdp_90 {
+	width:90%
+} 
+.btn {
+	border-radius:3px;
+	padding:5px 11px;
+	color:#fff !important; 
+	display:inline-block;
+	background-color:#6b9ab8; 
+	border:1px solid #56819d;
+	vertical-align:middle
+}
+
+/************/
+.footer {
+   padding: 80px 0 32px;
+}
+
+.footer_link {
+   padding: 0;
+   display: flex;
+   justify-content: center;
+   font-weight: 400;
+}
+
+.footer_item {
+   margin: 0 10px;
+}
+
+.footer_copy {
+   width: 553px;
+   margin: 10px auto 0;
+   text-align: center;
+}
+
+.footer_copy>.text {
+   color: #888;
+   font-weight: 800;
+}
+
+.footer_copy img {
+   margin-bottom: 10px;
+}

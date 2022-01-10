@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.reserve.restaurant.repository.UserRepository">
+<select id="selectUserById" parameterType="String" resultType="User">
+		SELECT USER_NO, ID, PW, NAME, TEL, GRADE, USER_DATE, HBD, STATE, POINT, EMAIL
+		  FROM USERTABLE
+		 WHERE ID = #{id}
+	</select>
+	
+	<select id="selectUserByNo" parameterType="Long" resultType="User">
+		SELECT USER_NO, ID, PW, NAME, TEL, GRADE, USER_DATE, HBD, STATE, POINT, EMAIL
+		  FROM USERTABLE
+		 WHERE USER_NO = #{userNo}
+	</select>
+	
+	
+	<select id="selectUserByEmail" parameterType="String" resultType="User">
+		SELECT USER_NO, ID, PW, NAME, TEL, GRADE, USER_DATE, HBD, STATE, POINT, EMAIL
+		  FROM USERTABLE
+		 WHERE EMAIL = #{email}
+	</select>
+	
+
+	<insert id="insertUser" parameterType="User">
+		INSERT INTO USERTABLE
+		VALUES(USER_NO_SEQ.NEXTVAL, #{id}, #{pw}, #{name}, #{tel}, 'Bronze', SYSDATE ,#{hbd}, 1 , 1000 , #{email} )
+	</insert>
+	
+	 
+	 
+	<select id="login" parameterType="User" resultType="User">
+		SELECT USER_NO, ID, PW, NAME, TEL, GRADE, USER_DATE, HBD, STATE, POINT, EMAIL
+		  FROM USERTABLE
+		 WHERE ID = #{id} AND PW = #{pw}
+	</select>
+	
+	<insert id="insertLoginLog" parameterType="Long">
+		INSERT INTO USERLOG VALUES (LOG_NO_SEQ.NEXTVAL, SYSDATE, #{userNo})
+	</insert>
+	
+	
+	<update id="updatePw" parameterType="User">
+		UPDATE USERTABLE
+		   SET PW = #{pw}
+		 WHERE ID = #{id}
+	</update>
+	
+	<update id="deleteUser" parameterType="Long">
+	DELETE 
+	  FROM USERTABLE
+	 WHERE USER_NO = #{userNo}
+	</update>
+	
+	<update id="updateUser" parameterType="User">
+		UPDATE USERTABLE
+		   SET TEL = #{tel}
+		     , EMAIL = #{email}
+		 WHERE USER_NO = #{userNo}
+	</update>
+	
+	<update id="updateUserPoint" parameterType="Long">
+		UPDATE USERTABLE
+		   SET POINT = POINT + 10
+		 WHERE USER_NO = #{userNo}
+	</update>
+	
+	
+	<resultMap type="Book" id="BookMap"> 
+		<result column="BOOK_NO" property="bookNo"/>
+		<result column="BOOK_TYPE" property="bookType"/>
+		<result column="BOOK_PEOPLE" property="bookPeople"/>
+		<result column="BOOK_REQUEST" property="bookRequest"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="RES_NO" property="resNo"/>
+		<result column="BOOK_STATE" property="bookState"/>
+		<result column="BOOK_HOURS" property="bookHours"/>
+		<result column="BOOK_DATE" property="bookDate"/>
+	</resultMap>
+	
+	<resultMap type="User" id="UserMap">
+		<result column="USER_NO" property="userNo"/>
+		<result column="ID"  property="id"/>
+		<result column="PW"  property="pw"/>
+		<result column="NAME"  property="name"/>
+		<result column="TEL"  property="tel"/>
+		<result column="GRADE"  property="grade"/>
+		<result column="USER_DATE"  property="userDate"/>
+		<result column="HBD"  property="hbd"/>
+		<result column="STATE"  property="state"/>
+		<result column="POINT"  property="point"/>
+		<result column="EMAIL"  property="email"/>
+		<collection property="book" resultMap="BookMap"/>
+	</resultMap>
+	
+	<resultMap type="Restaurant" id="RestaurantMap1">
+		<result column="RES_NO"  property="resNo"/>
+		<result column="RES_NAME"  property="resName"/>
+		<result column="RES_ADDRESS"  property="resAddress"/>
+		<result column="RES_ADDRESS_DETAIL"  property="resAddressDetail"/>
+		<result column="RES_OPENTIME"  property="resOpenTime"/>
+		<result column="RES_CLOSETIME"  property="resCloseTime"/>
+		<result column="RES_TEL"  property="resTel"/>
+		<result column="RES_CONTENT"  property="resContent"/>
+		<result column="RES_ORIGIN"  property="resOrigin"/>
+		<result column="RES_OPTION"  property="resOption"/>
+		<result column="RES_SAVED"  property="resSaved"/>
+		<result column="RES_PATH"  property="resPath"/>
+		<result column="OWNER_NO"  property="ownerNo"/>
+	</resultMap>
+	<resultMap type="Pay" id="PayMap">
+		<result column="PAY_NO"  property="payNo"/>
+		<result column="USER_NO"  property="userNo"/>
+		<result column="RES_NO"  property="resNo"/>
+		<result column="PAY_DATE"  property="payDate"/>
+		<result column="PAY_NAME"  property="payName"/>
+		<result column="PAY_METHOD"  property="payMethod"/>
+		<result column="AMOUNT"  property="amount"/>
+		<result column="ID"  property="id"/>
+		<result column="BOOK_NO"  property="bookNo"/>
+		<collection property="restaurant" resultMap="RestaurantMap1"/>
+	</resultMap>
+	
+	<!-- 페이징처리 -->
+	<select id="selectPayListByuserNo" resultMap="PayMap" parameterType="Map">
+		SELECT  B.PAY_NO, B.USER_NO, B.RES_NO, B.PAY_DATE, B.PAY_METHOD, B.AMOUNT, B.ID, B.BOOK_NO, B.PAY_NAME,
+		        B.RES_NAME, B.RES_TEL, B.RES_ADDRESS, B.RES_ADDRESS_DETAIL, B.RES_OPEN_TIME, B.RES_CLOSE_TIME,
+		        B.RES_CONTENT, B.RES_ORIGIN, B.RES_OPTION, B.RES_SAVED, B.RES_PATH, B.OWNER_NO
+		  FROM (SELECT ROWNUM AS RN, A.PAY_NO, A.USER_NO, A.RES_NO, A.PAY_DATE, A.PAY_METHOD, A.AMOUNT, A.ID, A.BOOK_NO,  A.PAY_NAME,
+							       	 A.RES_NAME, A.RES_TEL, A.RES_ADDRESS, A.RES_ADDRESS_DETAIL, A.RES_OPEN_TIME, A.RES_CLOSE_TIME,
+							       	 A.RES_CONTENT, A.RES_ORIGIN, A.RES_OPTION, A.RES_SAVED, A.RES_PATH, A.OWNER_NO
+		  		  FROM(SELECT P.PAY_NO, P.USER_NO, P.RES_NO, P.PAY_DATE, P.PAY_METHOD, P.AMOUNT, P.ID, P.BOOK_NO, P.PAY_NAME,
+		      				  R.RES_NAME, R.RES_TEL, R.RES_ADDRESS, R.RES_ADDRESS_DETAIL, R.RES_OPEN_TIME, R.RES_CLOSE_TIME,
+		      				  R.RES_CONTENT, R.RES_ORIGIN, R.RES_OPTION, R.RES_SAVED, R.RES_PATH, R.OWNER_NO
+					     FROM PAY P , RESTAURANT R
+					    WHERE R.RES_NO(+) = P.RES_NO
+					      AND P.USER_NO = #{userNo}
+						ORDER BY P.PAY_NO DESC)A)B
+	     WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<select id="selectTotalpayCount" resultType="int">
+		SELECT COUNT(USER_NO)
+		  FROM PAY
+	</select>
+	
+	
+	
+	<select id="hourCheck" parameterType="String" resultMap="UserMap">
+		SELECT U.USER_NO, U.ID, U.PW, U.NAME, U.TEL, U.GRADE, U.USER_DATE, U.HBD, U.STATE, U.POINT, U.EMAIL, B.BOOK_HOURS
+		  FROM USERTABLE U, BOOK B
+		 WHERE U.USER_NO(+) = B.USER_NO
+		   AND B.BOOK_HOURS = #{bookHours}
+	</select>
+	
+	
+	<select id="selectMenuList" parameterType="Long" resultType="Menu">
+		SELECT *
+		  FROM menu
+		 WHERE res_no = #{resNo}
+	</select>
+	
+	  <select id="selectReviewList" parameterType="Long" resultType="Review">
+      SELECT rv.review_no , rv.review_writer, rv.review_content, rv.review_origin, rv.review_saved, rv.review_path, rv.review_date, rv.review_rate, r.res_name, r.res_no
+      FROM review rv, restaurant r
+         WHERE rv.res_no = r.res_no
+           AND rv.res_no = #{resNo}
+   </select>
+   	
+   	<update id="UpdateRestState" parameterType="Long">
+		UPDATE RESTAURANT
+		   SET RES_STATE = 2
+		 WHERE RES_NO = #{resNo}
+	</update>
+   	<update id="DeleteRestState" parameterType="Long">
+		UPDATE RESTAURANT
+		   SET RES_STATE = 1
+		 WHERE RES_NO = #{resNo}
+	</update>
+	
+	
+	<select id="selectCartList" parameterType="Map" resultMap="RestaurantMap">
+		 SELECT B.RES_NO, B.RES_NAME, B.RES_TEL, B.RES_ADDRESS, B.RES_ADDRESS_DETAIL, B.RES_OPEN_TIME, B.RES_CLOSE_TIME,B.RES_STATE,
+		        B.RES_CONTENT, B.RES_ORIGIN, B.RES_OPTION, B.RES_SAVED, B.RES_PATH, B.OWNER_NO
+		   FROM (SELECT ROWNUM AS RN, A.RES_NO, A.RES_NAME, A.RES_TEL, A.RES_ADDRESS, A.RES_ADDRESS_DETAIL, A.RES_OPEN_TIME, A.RES_CLOSE_TIME, A.RES_STATE,
+							          A.RES_CONTENT, A.RES_ORIGIN, A.RES_OPTION, A.RES_SAVED, A.RES_PATH, A.OWNER_NO 
+				   FROM (SELECT R.RES_NO, R.RES_NAME, R.RES_TEL, R.RES_ADDRESS, R.RES_ADDRESS_DETAIL, R.RES_OPEN_TIME, R.RES_CLOSE_TIME, R.RES_STATE,
+						        R.RES_CONTENT, R.RES_ORIGIN, R.RES_OPTION, R.RES_SAVED, R.RES_PATH, R.OWNER_NO	
+						   FROM RESTAURANT R
+						  WHERE R.RES_STATE = 2	)A ) B
+		WHERE  B.RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<select id="selectTotalResCount"  resultType="int">
+		SELECT COUNT(*)
+		  FROM RESTAURANT
+	</select>			  
+	
+	
+	<resultMap type="Restaurant" id="RestaurantMap">
+		<result column="RES_NO"  property="resNo"/>
+		<result column="RES_NAME"  property="resName"/>
+		<result column="RES_ADDRESS"  property="resAddress"/>
+		<result column="RES_ADDRESS_DETAIL"  property="resAddressDetail"/>
+		<result column="RES_OPENTIME"  property="resOpenTime"/>
+		<result column="RES_CLOSETIME"  property="resCloseTime"/>
+		<result column="RES_TEL"  property="resTel"/>
+		<result column="RES_STATE"  property="resState"/>
+		<result column="RES_CONTENT"  property="resContent"/>
+		<result column="RES_ORIGIN"  property="resOrigin"/>
+		<result column="RES_OPTION"  property="resOption"/>
+		<result column="RES_SAVED"  property="resSaved"/>
+		<result column="RES_PATH"  property="resPath"/>
+		<result column="OWNER_NO"  property="ownerNo"/>
+	    <collection property="book" resultMap="BookMap"/>
+	</resultMap>
+	
+	
+	<insert id="insertQna" parameterType="Qna">
+		INSERT INTO QNA (QNA_NO, QNA_WRITER, QNA_TITLE, QNA_CONTENT, QNA_HIT, QNA_DATE, QNA_STATE, RES_NO)
+		VALUES(QNA_NO_SEQ.NEXTVAL,#{qnaWriter}, #{qnaTitle},  #{qnaContent}, 0, SYSDATE, #{qnaState}, #{resNo})
+	</insert>
+	
+	<select id="selectQnaList" parameterType="String" resultType="Qna">
+		SELECT *
+		  FROM QNA
+		 WHERE QNA_WRITER = #{qnaWriter}
+	</select>
+	
+	<select id="selectQna2" parameterType="Long" resultType="Qna">
+		SELECT *
+		  FROM QNA
+		 WHERE QNA_NO = #{qnaNo}
+		   AND QNA_STATE = 2
+	</select>
+	
+	<select id="selectQna3" parameterType="Long" resultType="Qna">
+		SELECT *
+		  FROM QNA
+		 WHERE QNA_NO = #{qnaNo}
+		   AND QNA_STATE = 3
+	</select>
+	
+	<delete id="deleteQna" parameterType="Long">
+		DELETE
+	      FROM QNA
+	     WHERE QNA_NO= #{qnaNo}
+	</delete>
+	
+	<update id="updateQna" parameterType="Qna">
+		UPDATE QNA
+		   SET QNA_TITLE = #{qnaTitle},
+		   	   QNA_CONTENT = #{qnaContent}
+		 WHERE QNA_NO= #{qnaNo}
+	</update>
+   
+   
+   <insert id="insertPay" parameterType="Pay">
+   		INSERT INTO PAY
+   		VALUES(PAY_NO_SEQ.NEXTVAL, #{userNo}, #{resNo}, #{bookNo}, TO_CHAR(SYSDATE,'yyyy.mm.dd hh24:mi'),#{payName}, #{payMethod}, #{amount}, #{id})
+   </insert>
+	
+</mapper>

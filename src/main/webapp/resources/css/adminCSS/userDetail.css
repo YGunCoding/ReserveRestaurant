@@ -1,0 +1,270 @@
+        /* 초기화시작 */
+        
+        @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        li {
+            list-style: none;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        img {
+            vertical-align: top;
+        }
+        
+        body {
+            font-family: 'nanumsquare';
+        }
+        
+        .wrap {
+            width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .wrap:after,
+        ul:after,
+        .cl:after {
+            content: "";
+            clear: both;
+            display: block;
+        }
+        
+        .blind {
+            position: absolute;
+            left: -9999px;
+            width: 0;
+            height: 0;
+            font-size: 0;
+            overflow: hidden;
+        }
+        
+        table {
+            padding: 0;
+            border: 0;
+            border-spacing: 0px;
+            border-collapse: collapse;
+        }
+        
+        th,
+        td {
+            padding: 0;
+        }
+        /* 초기화끝 */
+        /* 헤더시작 */
+        
+        header {
+            height: 120px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background-color: white;
+            border-bottom: 1px solid silver;
+            box-shadow: 0 1px 2px lightgray;
+            margin: 0 auto;
+        }
+        
+        header h1 {
+            padding: 25px 0;
+        }
+        
+        header #gnb {
+            position: absolute;
+            right: 0;
+            top: 50px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        header #gnb li {
+            float: left;
+            margin-right: 20px;
+        }
+        
+        header #gnb li:last-child {
+            margin-right: 0;
+        }
+        /* 헤더끝 */
+        /* footer시작 */
+        
+        .footer {
+            padding: 80px 0 32px;
+        }
+        
+        .footer_link {
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            font-weight: 400;
+        }
+        
+        .footer_item {
+            margin: 0 10px;
+        }
+        
+        .footer_copy {
+            width: 553px;
+            margin: 10px auto 0;
+            text-align: center;
+        }
+        
+        .footer_logo {
+            display: inline-block;
+            /* 보여줄 이미지 크기 */
+            width: 70px;
+            height: 15px;
+            background-image: url(../images/projectlogo.png);
+            background-size: 245px 95px;
+            /* 본 이미지 크기 */
+            background-position: 0 -51px;
+        }
+        
+        .footer_copy>.text {
+            color: #888;
+            font-weight: 800;
+        }
+        
+        .footer_copy img {
+            margin-bottom: 10px;
+        }
+        
+        #bottom {
+            margin-top: 150px;
+        }
+        /* 끝 */
+        
+        .userInfo {
+            width: 1500px;
+            margin: 200px auto 30px;
+        }
+        
+        .userInfo>p {
+            margin-bottom: 30px;
+            font-size: 30px;
+            text-align: left;
+            padding-left: 300px;
+        }
+        
+        .userInfo_table {
+            width: 900px;
+            height: 250px;
+            padding: 10px;
+            border-spacing: 0 5px;
+            margin: 0 auto;
+        }
+        
+        .userInfo_table>tbody>tr>td:nth-of-type(1),
+        .userInfo_table>tbody>tr>td:nth-of-type(3) {
+            width: 150px;
+            padding-left: 10px;
+            font-size: 20px;
+            background-color: rgb(236, 236, 236);
+            border-bottom: 3px solid white;
+        }
+        
+        .userInfo_table>tbody>tr>td:nth-of-type(2),
+        .userInfo_table>tbody>tr>td:nth-of-type(4) {
+            width: 250px;
+            padding-left: 10px;
+            border-bottom: 3px solid rgb(236, 236, 236);
+        }
+        
+        .return_btn {
+            text-align: center;
+        }
+        
+        .btn {
+            width: 170px;
+            height: 40px;
+            font-size: 17px;
+            background-color: white;
+            border: 1px solid lightgray;
+            border-radius: 20px;
+        }
+        
+        .btn:hover {
+            color: white;
+            background-color: lightgray;
+            transition: 0.4s;
+            border: none;
+            cursor: pointer;
+        }
+        /* 최근예약목록 테이블 시작 */
+        
+        .book_list {
+            margin-top: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .book_table {
+            width: 1000px;
+            height: 300px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .book_table>thead>tr>td:nth-of-type(1) {
+            width: 150px;
+        }
+        
+        .book_table>thead>tr>td:nth-of-type(4) {
+            width: 300px;
+        }
+        
+        .book_table>tbody>tr>td:nth-of-type(3) {
+            width: 70px;
+        }
+        
+        .book_table>thead>tr>td {
+            height: 30px;
+            font-size: 20px;
+            border-bottom: 3px solid lightgray;
+            border-right: 3px solid lightgray;
+        }
+        
+        .book_table>thead>tr>td:last-of-type {
+            border-right: none;
+        }
+        
+        .book_table>tbody>tr>td {
+            border-right: 3px solid lightgray;
+            border-bottom: 1px solid lightgray;
+        }
+        
+        .book_table>tbody>tr>td:last-of-type {
+            border-right: none;
+        }
+        
+        .book_table>tbody>tr {
+            font-size: 14px;
+        }
+        
+        .book_time {
+            padding-left: 10px;
+        }
+        
+        tfoot>tr {
+            text-align: center;
+        }
+        
+        .paging_foot {
+            height: 35px;
+            font-size: 20px;
+        }
+        .notBook {
+        	font-size: 40px;
+        }
+        .footer_logo_image {
+        	display: block;
+        	margin: 0 auto;
+        }

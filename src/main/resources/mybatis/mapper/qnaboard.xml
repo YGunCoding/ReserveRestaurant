@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.reserve.restaurant.repository.QnaBoardRepository">
+
+	<resultMap type="Qna" id="QnaMap">
+		<result column="QNA_NO" property="qnaNo" />
+		<result column="QNA_WRITER" property="qnaWriter" />
+		<result column="QNA_TITLE" property="qnaTitle" />
+		<result column="QNA_CONTENT" property="qnaContent" />
+		<result column="QNA_HIT" property="qnaHit" />
+		<result column="QNA_DATE" property="qnaDate" />
+		<result column="QNA_LASTMODIFIED" property="qnaLastModified" />
+		<result column="QNA_STATE" property="qnaState" />
+		<result column="RES_NO" property="resNo" />
+		<collection property="reply" resultMap="ReplyMap" />
+	</resultMap>
+	
+	<resultMap type="Reply" id="ReplyMap">
+		<result column="REPLY_NO" property="replyNo" />
+		<result column="REPLY_WRITER" property="replyWriter" />
+		<result column="REPLY_CONTENT" property="replyContent" />
+		<result column="REPLY_DATE" property="replyDate" />
+		<result column="QNA_NO" property="qnaNo" />
+	</resultMap>
+
+	<!-- qna리스트 모두 가져오기 -->
+	<select id="selectQnaList" resultType="Qna">
+		SELECT B.QNA_NO, B.QNA_WRITER, B.QNA_TITLE, B.QNA_CONTENT, B.QNA_HIT, B.QNA_DATE, B.QNA_LASTMODIFIED, B.QNA_STATE
+  	      FROM (SELECT ROWNUM AS RN, A.QNA_NO, A.QNA_WRITER, A.QNA_TITLE, A.QNA_CONTENT, A.QNA_HIT, A.QNA_DATE, A.QNA_LASTMODIFIED, A.QNA_STATE
+          		  FROM (SELECT QNA_NO, QNA_WRITER, QNA_TITLE, QNA_CONTENT, QNA_HIT, QNA_DATE, QNA_LASTMODIFIED, QNA_STATE
+                  	      FROM QNA) A
+ 		         ORDER BY A.QNA_NO DESC) B
+ 		 WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
+ 		 ORDER BY B.RN ASC
+	</select>
+	
+
+	
+	<!-- qna리스트 전체 갯수 -->
+	<select id="countQnaList" resultType="int">
+		SELECT COUNT(*)
+		  FROM QNA
+	</select>	
+	
+	<!-- qnaInfo 불러오기 -->
+	<select id="selectQnaInfo" parameterType="Long" resultType="Qna">
+		SELECT QNA_NO, QNA_WRITER, QNA_TITLE, QNA_CONTENT, QNA_HIT, QNA_DATE, QNA_LASTMODIFIED, QNA_STATE
+		  FROM QNA Q
+		 WHERE QNA_NO = #{qnaNo}
+	</select>
+	
+	<!-- Reply 불러오기 -->
+	<select id="selectReply" parameterType="Long" resultType="Reply">
+		SELECT REPLY_NO, REPLY_WRITER, REPLY_CONTENT, REPLY_DATE
+		  FROM REPLY
+		 WHERE QNA_NO = #{qanNo}
+	</select>
+	
+	
+	<!-- qna수정하기 -->
+	<update id="updateQna" parameterType="Map">
+		UPDATE QNA
+		   SET QNA_TITLE = #{qnaTitle}, QNA_CONTENT = #{qnaContent}, QNA_LASTMODIFIED = SYSDATE
+		 WHERE QNA_NO = #{qnaNo}
+	</update>
+	
+	<!-- qna 등록하기 -->
+	<insert id="qnaInsert" parameterType="Qna">
+		INSERT INTO QNA VALUES (QNA_NO_SEQ.NEXTVAL, #{qnaWriter}, #{qnaTitle}, #{qnaContent}, 0, SYSDATE, SYSDATE, 1, 0)
+	</insert>
+	
+	<!-- qna 삭제하기 -->
+	<delete id="qnaDelete" parameterType="Long">
+		DELETE
+		  FROM QNA
+		 WHERE QNA_NO = #{qnaNo}
+	</delete>
+	
+	<!-- Reply 등록하기 -->
+	<insert id="insertReply" parameterType="Reply">
+		INSERT INTO REPLY VALUES (RES_NO_SEQ.NEXTVAL, #{replyWriter}, #{replyContent}, SYSDATE, #{qnaNo})
+	</insert>
+	
+	<!-- Reply 삭제하기 -->
+	<delete id="deleteReply" parameterType="Long">
+		DELETE 
+		  FROM REPLY
+		 WHERE QNA_NO = #{qnaNo}
+	</delete>
+	
+	<!-- qna 조회수 증가 -->
+	<update id="updateQnaHit" parameterType="Long">
+		UPDATE QNA
+		   SET QNA_HIT = QNA_HIT + 1
+		 WHERE QNA_NO = #{qnaNo}
+	</update>
+	
+	<!-- qnaSearch -->
+	<select id="searchQna" parameterType="Map" resultType="Qna">
+		SELECT B.QNA_NO, B.QNA_WRITER, B.QNA_TITLE, B.QNA_CONTENT, B.QNA_HIT, B.QNA_DATE, B.QNA_LASTMODIFIED, B.QNA_STATE
+		  FROM (SELECT ROWNUM AS RN, A.QNA_NO, A.QNA_WRITER, A.QNA_TITLE, A.QNA_CONTENT, A.QNA_HIT, A.QNA_DATE, A.QNA_LASTMODIFIED, A.QNA_STATE
+		  		  FROM (SELECT QNA_NO, QNA_WRITER, QNA_TITLE, QNA_CONTENT, QNA_HIT, QNA_DATE, QNA_LASTMODIFIED, QNA_STATE
+			   			  FROM QNA
+			 			 WHERE UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%') A) B
+		 WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<!-- qnaSearch count -->
+	<select id="countSearchQna" parameterType="Map" resultType="int">
+		SELECT COUNT(*)
+		  FROM QNA
+		 WHERE UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'
+	</select>
+	
+	
+	
+	
+</mapper>

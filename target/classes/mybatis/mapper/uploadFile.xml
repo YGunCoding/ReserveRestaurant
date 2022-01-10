@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace = "com.reserve.restaurant.repository.UploadFileRepository">
+
+
+
+
+	<!-- 사진 추가 -->
+	<insert id="fileInsert" parameterType="UploadFile">
+		INSERT into UPLOADFILE 
+		VALUES (#{uuid}, #{path}, #{origin}, #{resNo})
+	</insert>
+	
+	
+	<!-- 사진 불러오기 -->
+	<select id="selectFile" parameterType="Long" resultType="UploadFile">
+		SELECT u.*
+		  FROM uploadfile u, restaurant r
+		 WHERE u.res_no = r.res_no
+		  AND r.res_no = #{resNo}
+	</select>
+	
+	
+	<delete id="deleteFile" parameterType="Long" >
+		DELETE FROM uploadfile WHERE file_no = #{fileNo}
+	</delete>
+</mapper>

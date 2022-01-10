@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.reserve.restaurant.repository.BookRepository">
+
+
+	<!-- 사업자가 등록된 예약 불러올때 -->
+	 <select id="bookList" resultType="Map">
+ 	SELECT b.book_no, b.book_type, b.book_people, b.book_request, b.book_hours, b.book_date, u.name, r.res_name
+	 	  FROM BOOK b, restaurant r, usertable u
+	 	 WHERE b.res_no = r.res_no
+	 	   AND b.user_no = u.user_no
+	 	   AND r.owner_no = #{ownerNo}
+	 </select>
+	 
+   
+<!--   
+	 <resultMap type="Book" id="calMap"> 
+	 	<result property="start" column="start1"/>
+		<result property="end" column="end1"/> 
+	</resultMap>
+	<select id="calenList" resultMap="calMap"> 
+		SELECT b.book_no, b.book_type, TO_char(start1, 'YYYY-MM-DD"T"HH24:MI:SS')start1, TO_char(end1, 'YYYY-MM-DD"T"HH24:MI:SS')end1, b.book_people, b.book_request, b.book_hours, b.book_date, u.name, r.res_name 
+		  FROM BOOK b, restaurant r, usertable u
+	 	 WHERE b.res_no = r.res_no
+	 	   AND b.user_no = u.user_no
+	</select>
+	 -->
+   
+   
+   
+   	<insert id="insertBook" parameterType="Book">
+	<selectKey keyProperty="bookNo" order="BEFORE" resultType="Long">
+			SELECT BOOK_NO_SEQ.NEXTVAL
+			  FROM DUAL
+		</selectKey>
+		INSERT INTO BOOK
+		VALUES(#{bookNo}, #{bookType}, #{bookPeople}, #{bookRequest}, #{userNo}, #{resNo}, 6, #{bookHours} , #{bookDate})
+	</insert>
+	
+	
+	<resultMap type="Book" id="BookMap"> 
+		<result column="BOOK_NO" property="bookNo"/>
+		<result column="BOOK_TYPE" property="bookType"/>
+		<result column="BOOK_PEOPLE" property="bookPeople"/>
+		<result column="BOOK_REQUEST" property="bookRequest"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="RES_NO" property="resNo"/>
+		<result column="BOOK_STATE" property="bookState"/>
+		<result column="BOOK_HOURS" property="bookHours"/>
+		<result column="BOOK_DATE" property="bookDate"/>
+		<collection property="restaurant" resultMap="RestaurantMap"/>
+	</resultMap>
+	
+	<resultMap type="Restaurant" id="RestaurantMap">
+		<result column="RES_NO"  property="resNo"/>
+		<result column="RES_NAME"  property="resName"/>
+		<result column="RES_ADDRESS"  property="resAddress"/>
+		<result column="RES_ADDRESS_DETAIL"  property="resAddressDetail"/>
+		<result column="RES_OPENTIME"  property="resOpenTime"/>
+		<result column="RES_CLOSETIME"  property="resCloseTime"/>
+		<result column="RES_TEL"  property="resTel"/>
+		<result column="RES_CONTENT"  property="resContent"/>
+		<result column="RES_ORIGIN"  property="resOrigin"/>
+		<result column="RES_OPTION"  property="resOption"/>
+		<result column="RES_SAVED"  property="resSaved"/>
+		<result column="RES_PATH"  property="resPath"/>
+		<result column="OWNER_NO"  property="ownerNo"/>
+	</resultMap>
+	
+	
+	<!-- 
+		<select id="selectBookingListByuserNo" parameterType="Map" resultMap="BookMap">
+			 SELECT B.BOOK_NO, B.BOOK_TYPE, B.BOOK_PEOPLE, B.BOOK_REQUEST,B.USER_NO , B.BOOK_HOURS,B.BOOK_DATE, B.RES_NO,
+			        R.RES_NAME, R.RES_TEL, R.RES_ADDRESS, R.RES_ADDRESS_DETAIL, R.RES_OPEN_TIME, R.RES_CLOSE_TIME,
+			        R.RES_CONTENT, R.RES_ORIGIN, R.RES_OPTION, R.RES_SAVED, R.RES_PATH, R.OWNER_NO
+			   FROM RESTAURANT R , BOOK B
+			  WHERE B.RES_NO =  R.RES_NO
+			    AND B.USER_NO = #{userNo}
+		</select>
+	 -->
+	 
+	<!-- 페이징처리 -->
+	<select id="selectBookingListByuserNo" resultMap="BookMap" parameterType="Map">
+		SELECT  B.BOOK_NO, B.BOOK_TYPE, B.BOOK_PEOPLE, B.BOOK_REQUEST,B.USER_NO , B.BOOK_HOURS,B.BOOK_DATE, B.RES_NO, B.BOOK_STATE,
+		        B.RES_NAME, B.RES_TEL, B.RES_ADDRESS, B.RES_ADDRESS_DETAIL, B.RES_OPEN_TIME, B.RES_CLOSE_TIME,
+		        B.RES_CONTENT, B.RES_ORIGIN, B.RES_OPTION, B.RES_SAVED, B.RES_PATH, B.OWNER_NO
+		  FROM (SELECT ROWNUM AS RN, A.BOOK_NO, A.BOOK_TYPE, A.BOOK_PEOPLE, A.BOOK_REQUEST,A.USER_NO , A.BOOK_HOURS,A.BOOK_DATE, A.RES_NO, A.BOOK_STATE,
+							         A.RES_NAME, A.RES_TEL, A.RES_ADDRESS, A.RES_ADDRESS_DETAIL, A.RES_OPEN_TIME, A.RES_CLOSE_TIME,
+							         A.RES_CONTENT, A.RES_ORIGIN, A.RES_OPTION, A.RES_SAVED, A.RES_PATH, A.OWNER_NO
+		  		  FROM(SELECT B.BOOK_NO, B.BOOK_TYPE, B.BOOK_PEOPLE, B.BOOK_REQUEST,B.USER_NO , B.BOOK_HOURS,B.BOOK_DATE, B.RES_NO, B.BOOK_STATE,
+					          R.RES_NAME, R.RES_TEL, R.RES_ADDRESS, R.RES_ADDRESS_DETAIL, R.RES_OPEN_TIME, R.RES_CLOSE_TIME,
+					          R.RES_CONTENT, R.RES_ORIGIN, R.RES_OPTION, R.RES_SAVED, R.RES_PATH, R.OWNER_NO
+					     FROM RESTAURANT R, BOOK B
+					    WHERE B.RES_NO(+) = R.RES_NO
+					      AND B.USER_NO = #{userNo}
+						ORDER BY B.BOOK_NO DESC)A)B
+	     WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<!-- 페이징처리 -->
+	<select id="selectBookingByresNo" parameterType="Map" resultMap="BookMap">
+		 SELECT  B.BOOK_NO, B.BOOK_TYPE, B.BOOK_PEOPLE, B.BOOK_REQUEST,B.USER_NO , B.BOOK_HOURS,B.BOOK_DATE, B.RES_NO, B.BOOK_STATE,
+		        B.RES_NAME, B.RES_TEL, B.RES_ADDRESS, B.RES_ADDRESS_DETAIL, B.RES_OPEN_TIME, B.RES_CLOSE_TIME,
+		        B.RES_CONTENT, B.RES_ORIGIN, B.RES_OPTION, B.RES_SAVED, B.RES_PATH, B.OWNER_NO
+		  FROM (SELECT ROWNUM AS RN, A.BOOK_NO, A.BOOK_TYPE, A.BOOK_PEOPLE, A.BOOK_REQUEST,A.USER_NO , A.BOOK_HOURS,A.BOOK_DATE, A.RES_NO, A.BOOK_STATE,
+							         A.RES_NAME, A.RES_TEL, A.RES_ADDRESS, A.RES_ADDRESS_DETAIL, A.RES_OPEN_TIME, A.RES_CLOSE_TIME,
+							         A.RES_CONTENT, A.RES_ORIGIN, A.RES_OPTION, A.RES_SAVED, A.RES_PATH, A.OWNER_NO
+		  		  FROM(SELECT B.BOOK_NO, B.BOOK_TYPE, B.BOOK_PEOPLE, B.BOOK_REQUEST,B.USER_NO , B.BOOK_HOURS,B.BOOK_DATE, B.RES_NO, B.BOOK_STATE,
+					          R.RES_NAME, R.RES_TEL, R.RES_ADDRESS, R.RES_ADDRESS_DETAIL, R.RES_OPEN_TIME, R.RES_CLOSE_TIME,
+					          R.RES_CONTENT, R.RES_ORIGIN, R.RES_OPTION, R.RES_SAVED, R.RES_PATH, R.OWNER_NO
+					     FROM RESTAURANT R, BOOK B
+					    WHERE B.RES_NO(+) = R.RES_NO
+					      AND B.RES_NO = #{resNo}
+						ORDER BY B.BOOK_NO DESC)A)B
+	     WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+
+	<select id="selectTotalBookingCount"  resultType="int">
+		SELECT COUNT(BOOK_NO)
+		  FROM BOOK
+	</select>
+	
+	
+	<select id="selectTotalResCount"  resultType="int">
+		SELECT COUNT(RES_NO)
+		  FROM BOOK
+	</select>
+	
+	<update id="updatebookingState" parameterType="Long">
+		UPDATE BOOK
+		   SET BOOK_STATE = 7,
+		       BOOK_HOURS = 0
+		 WHERE BOOK_NO = #{bookNo}
+	</update>
+	
+	<select id="selectCancelCount" resultType="Integer">
+		SELECT COUNT(BOOK_NO)
+		  FROM BOOK
+		 WHERE BOOK_STATE = 7
+	</select>
+
+	<select id="selectCancelList" parameterType="Map" resultMap="BookMap">
+		 SELECT  B.BOOK_NO, B.BOOK_TYPE, B.BOOK_PEOPLE, B.BOOK_REQUEST,B.USER_NO , B.BOOK_HOURS,B.BOOK_DATE, B.RES_NO, B.BOOK_STATE,
+		        B.RES_NAME, B.RES_TEL, B.RES_ADDRESS, B.RES_ADDRESS_DETAIL, B.RES_OPEN_TIME, B.RES_CLOSE_TIME,
+		        B.RES_CONTENT, B.RES_ORIGIN, B.RES_OPTION, B.RES_SAVED, B.RES_PATH, B.OWNER_NO
+		  FROM (SELECT ROWNUM AS RN, A.BOOK_NO, A.BOOK_TYPE, A.BOOK_PEOPLE, A.BOOK_REQUEST,A.USER_NO , A.BOOK_HOURS,A.BOOK_DATE, A.RES_NO, A.BOOK_STATE,
+							         A.RES_NAME, A.RES_TEL, A.RES_ADDRESS, A.RES_ADDRESS_DETAIL, A.RES_OPEN_TIME, A.RES_CLOSE_TIME,
+							         A.RES_CONTENT, A.RES_ORIGIN, A.RES_OPTION, A.RES_SAVED, A.RES_PATH, A.OWNER_NO
+		  		  FROM(SELECT B.BOOK_NO, B.BOOK_TYPE, B.BOOK_PEOPLE, B.BOOK_REQUEST,B.USER_NO , B.BOOK_HOURS,B.BOOK_DATE, B.RES_NO, B.BOOK_STATE,
+					          R.RES_NAME, R.RES_TEL, R.RES_ADDRESS, R.RES_ADDRESS_DETAIL, R.RES_OPEN_TIME, R.RES_CLOSE_TIME,
+					          R.RES_CONTENT, R.RES_ORIGIN, R.RES_OPTION, R.RES_SAVED, R.RES_PATH, R.OWNER_NO
+					     FROM RESTAURANT R, BOOK B
+					    WHERE B.RES_NO(+) = R.RES_NO
+					      AND B.BOOK_STATE = 7
+						ORDER BY B.BOOK_NO DESC)A)B
+	     WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<!-- bookNo 를 받는곳 -->
+	<select id="selectBookBybookNo" parameterType="Long" resultType="Restaurant">
+		SELECT B.*
+		FROM BOOK A, RESTAURANT B
+		WHERE A.RES_NO = B.RES_NO AND BOOK_NO = #{bookNo}
+	</select>
+	
+	<select id="hourCheck" parameterType="String" resultType="Map">
+		SELECT BOOK_NO, BOOK_TYPE, BOOK_PEOPLE, BOOK_REQUEST,USER_NO , BOOK_HOURS,BOOK_DATE, RES_NO, BOOK_STATE, BOOK_HOURS
+		  FROM BOOK
+		 WHERE BOOK_HOURS = #{bookHours}
+		   AND BOOK_DATE = #{bookDate}
+	</select>
+</mapper>

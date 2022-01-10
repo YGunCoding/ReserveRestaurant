@@ -1,0 +1,293 @@
+@charset "UTF-8";
+
+ul,
+li {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    cursor: pointer;
+    color:black;
+}
+
+.row {
+    display: flex;
+    margin: 0 0 0 10px;
+  
+}
+
+.col-4 {
+    width: 200px;
+    height: 600px;
+    margin: 30px;
+    padding: 10px;
+    
+}
+
+.col-6 {
+    width: 900px;
+}
+
+.menu_nav {
+    width: 200px;
+    padding: 0 0 30px 0;
+    font-size: 14px;
+}
+
+.menu_title {
+    padding: 5px;
+}
+
+.menu_nav li {
+    padding: 5px;
+}
+
+.ing_title {
+    margin-top: 10px;
+    padding: 10px 10px 0;
+}
+
+td {
+    padding: 10px;
+    font-size: 14px;
+}
+
+tr td:first-child {
+/*     width: 150px; */
+    text-align: center;
+}
+
+input {
+    padding: 3px;
+}
+
+.menu_input input{
+    margin:3px;
+    width:180px;
+}
+#s_name {
+    width: 370px;
+}
+
+tfoot {
+    text-align: center;
+}
+
+.plus_btn {
+    background-color: white;
+    border: none;
+    outer-border:none;
+    padding:5px;
+}
+
+
+.fa-plus-square {
+    width: 20px;
+}
+
+.add_btn {
+    width: 300px;
+    background-color: rgb(160, 57, 38);
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+.add_btn:hover{
+    background-color:  rgba(160, 57, 38, 0.795);
+}
+label {
+    margin-right: 5px;
+}
+textarea{
+    padding: 5px;
+}
+.container{
+    margin-top: 150px;
+}
+.container1{
+    height: 250px;
+    padding: 15px;
+   
+}
+.store_img{
+    width: 150px;
+    height:150px;
+    display: flex;
+    border-radius: 10px;
+}
+.col-sm-6 {
+    flex: 0 0 auto;
+    width: 100%;
+}
+.col-sm-3 {
+    flex: 0 0 auto;
+    width: 30%;
+}
+.col-sm-9 {
+    flex: 0 0 auto;
+    width: 100%;
+
+}
+#update_btn, #delete_btn, #update_menu, #list_btn, #content_btn{
+    width: 100px;
+    background-color: rgb(160, 57, 38);
+    border: none;
+    color: white;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 10px;
+}
+#update_btn:hover, #delete_btn:hover, #update_menu:hover{
+    background-color:  rgba(160, 57, 38, 0.795);
+}
+
+/*question 테이블 작업*/
+table{
+    width: 100%;
+}
+.question_btn{
+    display: flex;
+}
+.store_question, .reserve_question{
+    width: 300px;
+    margin:0 auto;
+    padding: 5px ;
+    text-align: center;
+}
+.store_question:hover, .reserve_question:hover{
+    background-color: rgba(160, 57, 38, 0.795);
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+thead{
+    text-align: center;
+}
+
+.question_table td{
+    border-bottom: 1px solid gray;
+}
+/* table td:first-child{
+    width: 250px;
+} */
+
+
+.addtable td:first-child{
+	width:250px
+}
+
+select{
+    padding:4px;
+}
+
+.address_box{
+	margin:3px;
+}
+.address_box input{
+	width: 308px;
+}
+.address{
+	margin-right:30px;
+}
+
+.infobox td:first-child{
+	width:200px;
+} 
+.infobox input{
+	width:250px;
+}
+#check_id, #check_pw{
+	width:100px;
+    background-color: #da5e531605738;
+    border: none;
+    color: gray;
+    padding: 5px;
+    border-radius: 10px;
+}
+#check_id:hover, #check_pw:hover{
+    cursor: pointer;
+}
+.empty_content{
+	padding: 5px;
+}
+.list_table{
+	border:1px solid #ededed;
+	margin: 10px;
+	border-radius:30px;
+}
+
+.list_table:hover{
+	cursor:pointer;
+}
+.list_table td:first-child{
+	width:300px;
+}
+.paging{
+    display: flex;
+    width: 100%;
+    color: rgb(160, 57, 38);
+    padding: 30px;
+    justify-content: center;
+}
+}
+.listimg{
+	width:300px;
+	height: 250px;
+	border-radius: 10px;
+}
+.listtitle{
+	text-align:center;
+	padding-top: 15px;
+}
+.qnatable{
+	width:100%	
+}
+.question_table td{
+	text-align:center;
+}
+/* .question_table td:first-child{
+	width:20%;
+} */
+.qnatable td:first-child.{
+	width:100px;
+}
+.qnatable input, .qnatable textarea{
+	border: none;
+	outline: none;
+}
+.qnatable td{
+	border-bottom:0.5px solid silver;
+}
+.comment{
+	display: flex;
+	margin: 10px;
+	flex-flow:row nowrap;
+	justify-content:space-between;
+	text-align:center;
+}
+.commenttitle{
+	font-size:14px;
+	width:100px;
+	height:30px;
+	margin: 20px 0 0 0;
+	padding:10px;
+}
+.content_btn{
+	width:30px;
+	background-color: silver;
+	padding:10px
+}
+.bottombtn{
+	display:flex;
+	text-align:center;
+}
+.titletable{
+	width:45%;
+}

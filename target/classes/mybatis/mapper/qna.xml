@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.reserve.restaurant.repository.QnaRepository">
+	<!-- 식당정보문의 목록 수 -->
+	<select id="ListTotalCount1" parameterType="Long" resultType="int">
+		SELECT COUNT(*)
+		  FROM QNA q, restaurant r, owner o
+	 	 WHERE q.res_no = r.res_no
+	   	   AND r.owner_no = o.owner_no
+	       AND o.owner_no = #{ownerNo}
+		   AND QNA_STATE = 2
+	</select>
+	
+	<!--예약문의 목록 수-->
+	<select id="ListTotalCount2" resultType="int">
+		SELECT COUNT(*)
+		  FROM QNA q, restaurant r, owner o
+	 	 WHERE q.res_no = r.res_no
+	   	   AND r.owner_no = o.owner_no
+	       AND o.owner_no = #{ownerNo}
+		   AND QNA_STATE = 3
+	</select>
+
+	<!-- 식당정보문의로 -->
+	<select id="selectQnaList1" parameterType="Map" resultType="Qna">
+		SELECT B.*
+		  FROM(SELECT ROWNUM AS rn, A.*
+		  		FROM (SELECT q.*
+		  		       FROM QNA q , restaurant r, owner o
+					  WHERE q.res_no = r.res_no
+					    AND r.owner_no = o.owner_no
+					    AND o.owner_no = #{ownerNo}
+					    AND QNA_STATE = 2
+					  ORDER BY QNA_NO DESC)A )B
+		WHERE B.rn BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<!-- 예약문의로 -->
+	<select id="selectQnaList2" parameterType="Map" resultType="Qna">
+		SELECT *
+		  FROM(SELECT ROWNUM AS rn, A.*
+		  		FROM (SELECT q.*
+		  		       FROM QNA q , restaurant r, owner o
+					  WHERE q.res_no = r.res_no
+					    AND r.owner_no = o.owner_no
+					    AND o.owner_no = #{ownerNo}
+					    AND QNA_STATE = 3
+					  ORDER BY QNA_NO DESC)A )B
+		WHERE B.rn BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<!-- 하나 골라서 들어가기 -->
+	<select id="selectQnaByNo" parameterType="Long" resultType="Qna">
+		SELECT *
+		  FROM QNA
+		 WHERE QNA_NO = #{qnaNo}
+	</select>
+	
+	<!-- 조회수 -->
+	<update id="updateQnaHit" parameterType="Long">
+		UPDATE QNA
+		   SET QNA_HIT = QNA_HIT + 1
+		 WHERE QNA_NO = #{qnaNo}
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteQna" parameterType="Long">
+		DELETE
+		  FROM QNA
+		 WHERE QNA_NO = #{qnaNo}
+	</delete>
+	
+	<!-- 댓글 추가 -->
+	<insert id="qnaReplyInsert" parameterType="Reply">
+		INSERT INTO REPLY (reply_no, reply_writer, reply_content, reply_date, qna_no)
+		VALUES (reply_no_seq.nextval, #{replyWriter}, #{replyContent}, SYSDATE, #{qnaNo})
+	</insert>
+ 	
+ 	<!-- 댓글 조회 -->	
+	<select id="qnaReplyList"  parameterType="Long" resultType="Reply">
+		SELECT *
+		 FROM REPLY
+		WHERE qna_no = #{qnaNo}
+		 
+	</select> 
+ 	
+	<!-- 댓글 삭제 -->
+	<delete id="qnaReplyDelete" parameterType="Long">
+	   DELETE 
+		 FROM REPLY
+		WHERE reply_no =  #{replyNo}
+	</delete>
+	
+	<!-- 댓글 수정 -->
+	<update id="qnaReplyUpdate" parameterType="Reply">
+       UPDATE REPLY
+          SET reply_content = #{replyContent}
+       	WHERE reply_no =  #{replyNo}
+    </update>
+	
+	
+	
+</mapper>

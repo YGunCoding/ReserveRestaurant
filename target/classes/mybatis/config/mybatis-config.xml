@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd" >
+
+<configuration>
+
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+	
+	<typeAliases>
+
+
+		<typeAlias type="com.reserve.restaurant.domain.Restaurant" alias="Restaurant"/>
+		<typeAlias type="com.reserve.restaurant.domain.Owner" alias="Owner"/>
+		<typeAlias type="com.reserve.restaurant.domain.User" alias="User"/>
+		<typeAlias type="com.reserve.restaurant.domain.Qna" alias="Qna"/>
+		<typeAlias type="com.reserve.restaurant.domain.Menu" alias="Menu"/>
+		<typeAlias type="com.reserve.restaurant.domain.Book" alias="Book"/>
+		<typeAlias type="com.reserve.restaurant.domain.Notice" alias="Notice"/>
+		<typeAlias type="com.reserve.restaurant.domain.Review" alias="Review"/>
+		<typeAlias type="com.reserve.restaurant.domain.Reply" alias="Reply"/>
+		<typeAlias type="com.reserve.restaurant.domain.Comment" alias="Comment"/>
+		<typeAlias type="com.reserve.restaurant.domain.UploadFile" alias="UploadFile"/>
+		<typeAlias type="com.reserve.restaurant.domain.Pay" alias="Pay"/>
+	</typeAliases>
+	
+	
+</configuration>

@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.reserve.restaurant.repository.AdminRepository">
+
+	<resultMap type="Owner" id="OwnerMap">
+		<result column="OWNER_NO" property="ownerNo" />
+		<result column="ID" property="id" />
+		<result column="PW" property="pw" />
+		<result column="EMAIL" property="email" />
+		<result column="TEL" property="tel" />
+		<result column="NAME" property="name" />
+		<result column="STATE" property="state" />
+		<collection property="restaurant" resultMap="RestaurantMap" />
+	</resultMap>
+	
+	<resultMap type="Restaurant" id="RestaurantMap">
+		<result column="RES_NO" property="resNo" />
+		<result column="RES_NAME" property="resName" />
+		<result column="RES_ADDRESS" property="resAddress" />
+		<result column="RES_ADDRESS_DETAIL" property="resAddressDetail" />
+		<result column="RES_OPEN_TIME" property="resOpenTime" />
+		<result column="RES_CLOSE_TIME" property="resCloseTime" />
+		<result column="RES_TEL" property="resTel" />
+		<result column="RES_CONTENT" property="resContent" />
+		<result column="RES_OPTION" property="resOption" />
+		<result column="RES_ORIGIN" property="resOrigin" />
+		<result column="RES_SAVED" property="resSaved" />
+		<result column="RES_PATH" property="resPath" />
+		<result column="RES_STATE" property="resState" />
+		<result column="OWNER_NO" property="ownerNo" />
+	</resultMap>
+	
+
+	<resultMap type="Book" id="BookMap">
+		<result column="BOOK_NO" property="bookNo"/>
+		<result column="BOOK_TYPE" property="bookType"/>
+		<result column="BOOK_PEOPLE" property="bookPeople"/>
+		<result column="BOOK_REQUEST" property="bookRequest"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="RES_NO" property="resNo"/>
+		<result column="BOOK_STATE" property="bookState"/>
+		<result column="BOOK_HOURS" property="bookHours"/>
+		<result column="BOOK_DATE" property="bookDate"/>
+		<collection property="user" resultMap="UserMap" />
+		<collection property="restaurant" resultMap="RestaurantMap" />
+	</resultMap>
+	
+	<resultMap type="User" id="UserMap">
+		<result column="USER_NO" property="userNo" />
+		<result column="ID" property="id" />
+		<result column="PW" property="pw" />
+		<result column="NAME" property="name" />
+		<result column="TEL" property="tel" />
+		<result column="GRADE" property="grade" />
+		<result column="USER_DATE" property="userDate" />
+		<result column="HBD" property="hbd" />
+		<result column="STATE" property="state" />
+		<result column="POINT" property="point" />
+		<result column="EMAIL" property="email" />
+	</resultMap>
+	
+	<resultMap type="Menu" id="MenuMap">
+		<result column="MENU_NO" property="menuNo" />
+		<result column="MENU_NAME" property="menuName" />
+		<result column="MENU_PRICE" property="menuPrice" />
+		<result column="MENU_DISCOUNT_RATE" property="menuDiscountRate" />
+		<result column="MENU_EXPIRY_DATE" property="menuExpiryDate" />
+		<result column="RES_NO" property="resNo" />
+	</resultMap>
+	
+	
+	<resultMap type="Review" id="ReviewMap">
+		<result column="REVIEW_NO" property="reviewNo"/>
+		<result column="REVIEW_WRITER" property="reviewWriter"/>
+		<result column="REVIEW_CONTENT" property="reviewContent"/>
+		<result column="REVIEW_ORIGIN" property="reviewOrigin"/>
+		<result column="REVIEW_SAVED" property="reviewSaved"/>
+		<result column="REVIEW_PATH" property="reviewPath"/>
+		<result column="REVIEW_DATE" property="reviewDate"/>
+		<result column="REVIEW_RATE" property="reviewRate"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="RES_NO" property="resNo"/>
+		<result column="STATE" property="state"/>
+		<result column="DEPT" property="dept"/>
+		<result column="GROUP_NO" property="groupNo"/>
+		<result column="GROUP_ORD" property="groupOrd" />
+		<collection property="restaurant" resultMap="RestaurantMap" />
+	</resultMap>
+
+	<!-- 예약중인지 아닌지 확인 -->	
+	<select id="checkBookState" resultType="Book" parameterType="Map">
+		SELECT B.BOOK_STATE
+		  FROM (SELECT ROWNUM AS RN, A.BOOK_STATE
+		  		  FROM (SELECT BOOK_STATE
+		  	   			  FROM BOOK)A )B
+		 WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	
+	
+	<!-- 검색 식당 리스트 가져오기 -->
+	<select id="findRes" parameterType="Map" resultType="Restaurant">
+		SELECT B.RES_NO, B.RES_NAME, B.RES_ADDRESS, B.RES_ADDRESS_DETAIL, B.RES_OPEN_TIME, B.RES_CLOSE_TIME, B.RES_TEL, B.RES_CONTENT, B.RES_OPTION, B.RES_ORIGIN, B.RES_SAVED, B.RES_PATH, B.OWNER_NO
+		  FROM (SELECT ROWNUM AS RN, A.RES_NO, A.RES_NAME, A.RES_ADDRESS, A.RES_ADDRESS_DETAIL, A.RES_OPEN_TIME, A.RES_CLOSE_TIME, A.RES_TEL, A.RES_CONTENT, A.RES_OPTION, A.RES_ORIGIN, A.RES_SAVED, A.RES_PATH, A.OWNER_NO
+		   		  FROM (SELECT RES_NO, RES_NAME, RES_ADDRESS, RES_ADDRESS_DETAIL, RES_OPEN_TIME, RES_CLOSE_TIME, RES_TEL, RES_CONTENT, RES_OPTION, RES_ORIGIN, RES_SAVED, RES_PATH, OWNER_NO
+		  	  		 	  FROM RESTAURANT
+	  			  		 WHERE 1 = 1
+	  			  		 	   <if test="column == 'RES_NAME'">AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'</if>
+	  			  		 	   <if test="column == 'RES_ADDRESS'">AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'</if>
+	  			  		 	   <if test="column == 'RES_ADDRESS_DETAIL'">AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'</if>
+	  			  		 	   <if test="column == 'RES_TEL'">AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'</if>) A) B	  			  		 	   	  			  		 
+	  	 WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<!-- 검색 식당 리스트 count -->
+	<select id="countFindRes" parameterType="Map" resultType="int">
+		SELECT COUNT(*)
+	 	  FROM RESTAURANT
+		 WHERE 1 = 1
+		 	   <if test="column == 'RES_NAME'">AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'</if>
+		 	   <if test="column == 'RES_ADDRESS'">AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'</if>
+		 	   <if test="column == 'RES_ADDRESS_DETAIL'">AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'</if>
+		 	   <if test="column == 'RES_TEL'">AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'</if> 			  		 	   	  			  		 
+	</select>
+	
+	<!-- 전체 식당 리스트 가져오기 -->
+	<select id="selectRes" parameterType="Map" resultType="Restaurant">
+	SELECT B.RES_NO, B.RES_NAME, B.RES_ADDRESS, B.RES_ADDRESS_DETAIL, B.RES_OPEN_TIME, B.RES_CLOSE_TIME, B.RES_TEL, B.RES_CONTENT, B.RES_OPTION, B.RES_ORIGIN, B.RES_SAVED, B.RES_PATH, B.OWNER_NO
+	  FROM (SELECT ROWNUM AS RN, A.RES_NO, A.RES_NAME, A.RES_ADDRESS, A.RES_ADDRESS_DETAIL, A.RES_OPEN_TIME, A.RES_CLOSE_TIME, A.RES_TEL, A.RES_CONTENT, A.RES_OPTION, A.RES_ORIGIN, A.RES_SAVED, A.RES_PATH, A.OWNER_NO
+	  		  FROM (SELECT RES_NO, RES_NAME, RES_ADDRESS, RES_ADDRESS_DETAIL, RES_OPEN_TIME, RES_CLOSE_TIME, RES_TEL, RES_CONTENT, RES_OPTION, RES_ORIGIN, RES_SAVED, RES_PATH, OWNER_NO
+		  	  		  FROM RESTAURANT) A) B
+     WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<!-- 총 등록된 식당 갯수 -->
+	<select id="countRes" resultType="int">
+		SELECT COUNT(*)
+		  FROM RESTAURANT
+	</select>
+	
+	
+	<!-- 사업자별 등록 식당 리스트 -->
+	<select id="selectResList" parameterType="map" resultType="Restaurant">
+	SELECT B.RES_NO, B.RES_NAME, B.RES_ADDRESS, B.RES_ADDRESS_DETAIL, B.RES_OPEN_TIME, B.RES_CLOSE_TIME, B.RES_TEL, B.RES_CONTENT, B.RES_ORIGIN, B.RES_SAVED, B.RES_PATH, B.OWNER_NO
+	  FROM (SELECT ROWNUM AS RN, A.RES_NO, A.RES_NAME, A.RES_ADDRESS, A.RES_ADDRESS_DETAIL, A.RES_OPEN_TIME, A.RES_CLOSE_TIME, A.RES_TEL, A.RES_CONTENT, A.RES_ORIGIN, A.RES_SAVED, A.RES_PATH, A.OWNER_NO
+	  		  FROM (SELECT RES_NO, RES_NAME, RES_ADDRESS, RES_ADDRESS_DETAIL, RES_OPEN_TIME, RES_CLOSE_TIME, RES_TEL, RES_CONTENT, RES_ORIGIN, RES_SAVED, RES_PATH, OWNER_NO
+		  	          FROM RESTAURANT
+		 	 	     WHERE OWNER_NO = #{ownerNo}) A) B
+     WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<!-- 사업자별 등록 식당 갯수 -->
+	<select id="countOwnerRes" parameterType="Long" resultType="int">
+		SELECT COUNT(*)
+		  FROM RESTAURANT
+		 WHERE OWNER_NO = #{ownerNo}
+	</select>
+	
+	<!-- 사용자최근 예약 목록 -->
+	<select id="selectBookList" parameterType="map" resultMap="BookMap">
+		SELECT D.RES_NAME, D.RES_ADDRESS, D.RES_ADDRESS_DETAIL, D.BOOK_PEOPLE, D.BOOK_REQUEST, D.BOOK_HOURS, D.BOOK_DATE
+		  FROM (SELECT ROWNUM AS RN, A.RES_NAME, A.RES_ADDRESS, A.RES_ADDRESS_DETAIL, A.BOOK_PEOPLE, A.BOOK_REQUEST, A.BOOK_HOURS, A.BOOK_DATE
+		  		  FROM (SELECT RES_NAME, RES_ADDRESS, RES_ADDRESS_DETAIL, BOOK_PEOPLE, BOOK_REQUEST, BOOK_HOURS, BOOK_DATE
+		  	      		  FROM RESTAURANT R, BOOK B 
+		 		 		 WHERE R.RES_NO = B.RES_NO
+		   		   		   AND USER_NO = #{userNo}
+		   		   		 ORDER BY R.RES_NO) A) D
+		 WHERE D.RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+
+	<!-- 사용자 예약갯수 -->
+	<select id="countBookList" parameterType="Long" resultType="int">
+		SELECT COUNT(*)
+		  FROM BOOK
+		 WHERE USER_NO = #{userNo}
+	</select>
+
+	<!-- 일반 회원 수 -->
+	<select id="countUser" resultType="int">
+		SELECT COUNT(*)
+		  FROM USERTABLE
+		 WHERE STATE = 1
+	</select>
+
+	<!-- 사업자 회원 수 -->
+	<select id="countOwner" resultType="int">
+		SELECT COUNT(*)
+		  FROM OWNER
+	</select>
+	
+	<!-- 일반 회원 리스트 -->
+	<select id="selectUserList" parameterType="Map" resultType="User">
+		SELECT B.USER_NO, B.ID, B.PW, B.NAME, B.TEL, B.GRADE, B.USER_DATE, B.HBD, B.STATE, B.POINT, B.EMAIL
+		  FROM (SELECT ROWNUM AS RN, A.USER_NO, A.ID, A.PW, A.NAME, A.TEL, A.GRADE, A.USER_DATE, A.HBD, A.STATE, A.POINT, A.EMAIL
+		   		  FROM (SELECT USER_NO, ID, PW, NAME, TEL, GRADE, USER_DATE, HBD, STATE, POINT, EMAIL
+		   	       		  FROM USERTABLE
+		   	       		 WHERE NOT NAME IN ('관리자')) A) B
+		 WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<!-- 사업자 회원 리스트 -->
+	<select id="selectOwnerList" parameterType="Map" resultType="Owner">
+		SELECT B.OWNER_NO, B.ID, B.PW, B.EMAIL, B.NAME, B.TEL, B.STATE
+		  FROM (SELECT ROWNUM AS RN, A.OWNER_NO, A.ID, A.PW, A.EMAIL, A.NAME, A.TEL, A.STATE
+		   		  FROM (SELECT OWNER_NO, ID, PW, EMAIL, NAME, TEL, STATE
+		   	       		  FROM OWNER) A) B
+		 WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<!-- 검색된 목록 수 -->
+	<select id="selectFindRecordCount" parameterType="Map" resultType="int">
+		SELECT COUNT(*)
+		  FROM USERTABLE
+		 WHERE 1 = 1 AND STATE = 1
+		 	   <if test="column == 'ID'">AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'</if>
+		       <if test="column == 'NAME'">AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'</if>
+		       <if test="column == 'TEL'">AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'</if>
+	</select>
+	
+	<!-- 검색 목록을 반환시켜주는 select -->
+	<select id="selectFindList" parameterType="Map" resultType="User">
+		SELECT B.USER_NO, B.ID, B.PW, B.NAME, B.TEL, B.GRADE, B.USER_DATE, B.HBD, B.STATE, B.POINT, B.EMAIL
+		  FROM (SELECT ROWNUM AS RN, A.USER_NO, A.ID, A.PW, A.NAME, A.TEL, A.GRADE, A.USER_DATE, A.HBD, A.STATE, A.POINT, A.EMAIL
+		   		  FROM (SELECT USER_NO, ID, PW, NAME, TEL, GRADE, USER_DATE, HBD, STATE, POINT, EMAIL
+		   	       		  FROM USERTABLE
+	  			  		 WHERE STATE = 1
+					       AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%') A) B	  			  		 	   	  			  		 
+	  	 WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	
+	<select id="selectFindRecordCountOwner" parameterType="Map" resultType="int">
+		SELECT COUNT(*)
+		  FROM OWNER
+		 WHERE 1 = 1
+		 	   <if test="column == 'ID'">AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'</if>
+		       <if test="column == 'NAME'">AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'</if>
+		       <if test="column == 'TEL'">AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'</if>
+	</select>
+	
+	<select id="selectFindListOwner" parameterType="Map" resultType="Owner">
+		SELECT B.OWNER_NO, B.ID, B.PW, B.EMAIL, B.NAME, B.TEL, B.STATE
+		  FROM (SELECT ROWNUM AS RN, A.OWNER_NO, A.ID, A.PW, A.EMAIL, A.NAME, A.TEL, A.STATE
+		   		  FROM (SELECT OWNER_NO, ID, PW, EMAIL, NAME, TEL, STATE
+		   	       		  FROM OWNER
+	  			  		 WHERE 1 = 1
+	  			  		 	   <if test="column == 'ID'">AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'</if>
+	  			  		 	   <if test="column == 'NAME'">AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'</if>
+	  			  		 	   <if test="column == 'TEL'">AND UPPER(${column}) LIKE '%' || UPPER(TRIM(#{query})) || '%'</if>) A) B	  			  		 	   	  			  		 
+	  	 WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<select id="selectUserInfo" parameterType="String" resultType="User">
+		SELECT USER_NO, ID, PW, NAME, TEL, GRADE, USER_DATE, HBD, STATE, POINT, EMAIL
+		  FROM USERTABLE
+		 WHERE USER_NO = #{userNo}
+	</select>
+	
+	<select id="selectOwnerInfo" parameterType="Long" resultType="Owner">
+		SELECT OWNER_NO, ID, NAME, EMAIL, TEL
+		  FROM OWNER
+		 WHERE OWNER_NO = #{owner_no}
+	</select>
+	
+	<select id="selectOwnerInfoRes" parameterType="Long" resultType="Restaurant">
+		SELECT RES_NAME, RES_ADDRESS, RES_ADDRESS_DETAIL, RES_OPEN_TIME, RES_CLOSE_TIME, RES_TEL, RES_OPTION
+		  FROM RESTAURANT
+		 WHERE OWNER_NO = #{owner_no}
+	</select>
+
+	<select id="searchCountRes" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		  FROM RESTAURANT
+		 WHERE RES_ADDRESS LIKE '%' || TRIM(#{query}) || '%'
+		    OR RES_ADDRESS_DETAIL LIKE '%' || TRIM(#{query}) || '%'
+		    OR RES_NAME LIKE '%' || TRIM(#{query}) || '%'
+	</select>
+
+	
+	<select id="resListByAddress" parameterType="Map" resultType="Restaurant">
+		 SELECT B.RES_NO, B.RES_NAME, B.RES_ADDRESS, B.RES_ADDRESS_DETAIL, B.RES_OPEN_TIME, B.RES_CLOSE_TIME, B.RES_TEL, B.RES_OPTION
+		   FROM (SELECT ROWNUM AS RN, A.RES_NO, A.RES_NAME, A.RES_ADDRESS, A.RES_ADDRESS_DETAIL, A.RES_OPEN_TIME, A.RES_CLOSE_TIME, A.RES_TEL, A.RES_OPTION
+		           FROM (SELECT RES_NO, RES_NAME, RES_ADDRESS, RES_ADDRESS_DETAIL, RES_OPEN_TIME, RES_CLOSE_TIME, RES_TEL, RES_OPTION
+		           		   FROM RESTAURANT
+		  		   		  WHERE RES_ADDRESS LIKE '%' || TRIM(#{query}) || '%'
+		     		  	     OR RES_ADDRESS_DETAIL LIKE '%' || TRIM(#{query}) || '%'
+		     		  		 OR RES_NAME LIKE '%' || TRIM(#{query}) || '%') A) B
+		  WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<select id="selectResDetail" parameterType="Long" resultType="Restaurant">
+		SELECT RES_NO, RES_NAME, RES_ADDRESS, RES_ADDRESS_DETAIL, RES_OPEN_TIME, RES_CLOSE_TIME, RES_TEL, RES_CONTENT, RES_OPTION, RES_ORIGIN, RES_SAVED, RES_PATH, OWNER_NO
+		  FROM RESTAURANT
+		 WHERE RES_NO = #{resNo}
+	</select>
+	
+	<!-- 리뷰 리스트 ( detail에보여주기 위한 ) -->
+   <select id="selectReviewList" parameterType="Long" resultType="Review">
+      SELECT    review_writer, review_content, review_origin, review_saved, review_path, review_date, review_rate
+        FROM 	review
+         WHERE res_no = #{resNo}
+          
+   </select>
+	
+	
+	<select id="countUserLog" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		  FROM USERLOG
+		 WHERE USER_NO = #{userNo}
+	</select>
+	
+	<!-- 신규 오픈 식당 -->
+	<select id="newOpen" resultType="Restaurant">
+	    SELECT A.RES_NO, A.RES_NAME, A.RES_ADDRESS, A.RES_ADDRESS_DETAIL, A.RES_OPEN_TIME, A.RES_CLOSE_TIME, A.RES_TEL, A.RES_CONTENT, A.RES_OPTION, A.RES_ORIGIN, A.RES_SAVED, A.RES_PATH, A.OWNER_NO
+	      FROM (SELECT ROWNUM AS RN, RES_NO, RES_NAME, RES_ADDRESS, RES_ADDRESS_DETAIL, RES_OPEN_TIME, RES_CLOSE_TIME, RES_TEL, RES_CONTENT, RES_OPTION, RES_ORIGIN, RES_SAVED, RES_PATH, OWNER_NO
+	      		  FROM RESTAURANT
+                 ORDER BY RES_NO DESC) A
+	     WHERE A.RN BETWEEN 1 AND 5
+	</select>
+	
+		<!-- 사진 불러오기 -->
+	<select id="selectFile" parameterType="Long" resultType="UploadFile">
+		SELECT u.*
+		  FROM uploadfile u, restaurant r
+		 WHERE u.res_no = r.res_no
+		  AND r.res_no = #{resNo}
+	</select>
+	
+
+
+
+
+	
+</mapper>
